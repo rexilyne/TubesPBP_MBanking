@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_home"
+        android:enabled="true"
+        android:icon="@drawable/ic_outline_home_24"
+        android:title="Home"/>
+    <item
+        android:id="@+id/menu_mutasi"
+        android:enabled="true"
+        android:icon="@drawable/ic_outline_article_24"
+        android:title="Mutasi"/>
+    <item
+        android:id="@+id/menu_transfer"
+        android:enabled="true"
+        android:icon="@drawable/ic_outline_money_24"
+        android:title="Transfer"/>
+    <item
+        android:id="@+id/menu_aktivitas"
+        android:enabled="true"
+        android:icon="@drawable/ic_outline_mail_24"
+        android:title="Aktivitas"/>
+    <item
+        android:id="@+id/menu_akun"
+        android:enabled="true"
+        android:icon="@drawable/ic_outline_account_circle_24"
+        android:title="Akun"/>
+</menu>
