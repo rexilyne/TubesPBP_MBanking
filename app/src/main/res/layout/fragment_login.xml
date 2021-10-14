@@ -70,7 +70,6 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginTop="16dp"
-            android:inputType="textPassword"
             app:errorEnabled="true"
             app:passwordToggleEnabled="true"
             app:startIconDrawable="@drawable/ic_outline_lock_24"
@@ -80,6 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@={user.password}"
+                android:inputType="textPassword"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -124,6 +124,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:onClick="@{fragment.btnRegister}"/>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

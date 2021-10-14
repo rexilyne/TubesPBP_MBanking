@@ -3,17 +3,24 @@ package com.example.tubespbp_mbanking.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.databinding.DataBindingUtil;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.tubespbp_mbanking.R;
 import com.example.tubespbp_mbanking.activity.MainActivity;
+import com.example.tubespbp_mbanking.database.DatabaseUser;
 import com.example.tubespbp_mbanking.databinding.FragmentLoginBinding;
 import com.example.tubespbp_mbanking.model.User;
+import com.example.tubespbp_mbanking.preferences.UserPreferences;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,8 +38,10 @@ public class FragmentLogin extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    User user;
-    FragmentLoginBinding binding;
+    private User userLogin;
+    private FragmentLoginBinding binding;
+    private UserPreferences userPreferences;
+    private List<User> userList;
 
     public FragmentLogin() {
         // Required empty public constructor
@@ -76,6 +85,21 @@ public class FragmentLogin extends Fragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        userPreferences = new UserPreferences(getActivity());
+        userList = new ArrayList<>();
+
+        userLogin = new User();
+        userLogin.setEmail("");
+        userLogin.setPassword("");
+        binding.setUser(userLogin);
+
+//        checkLogin();
+    }
+
     public void changeFragment(Fragment fragment){
         getParentFragmentManager()
                 .beginTransaction()
@@ -86,15 +110,50 @@ public class FragmentLogin extends Fragment {
     public View.OnClickListener btnLogin = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            startActivity(new Intent(getActivity(), MainActivity.class));
-            getActivity().finish();
+            if(validateForm()) {
+                getUserByEmail(userLogin.getEmail());
+                if(userList.isEmpty()) {
+                    Toast.makeText(getActivity(), "Username tidak ditemukan", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (userLogin.getEmail().trim().equals(userList.get(0).getEmail())
+                        && userLogin.getPassword().trim().equals(userList.get(0).getPassword())) {
+                    userPreferences.setLogin(userLogin);
+                    checkLogin();
+                } else {
+                    Toast.makeText(getActivity(), "Username atau Password salah", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     };
 
     public View.OnClickListener btnRegister = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            changeFragment(new FragmentRegister1());
+            changeFragment(new FragmentRegister());
         }
     };
+
+    private boolean validateForm() {
+        if(userLogin.getEmail().trim().isEmpty() ||
+                userLogin.getPassword().trim().isEmpty()) {
+            Toast.makeText(getActivity(), "Email atau Password kosong", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private void checkLogin() {
+        if(userPreferences.checkLogin()) {
+            startActivity(new Intent(getActivity(), MainActivity.class));
+            getActivity().finish();
+        }
+    }
+
+    private void getUserByEmail(String search) {
+        userList = DatabaseUser.getInstance(getActivity().getApplicationContext())
+                .getDatabase()
+                .userDao()
+                .getUserByEmail(search);
+    }
 }

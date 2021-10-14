@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import com.example.tubespbp_mbanking.R;
 import com.example.tubespbp_mbanking.fragment.FragmentLogin;
-import com.example.tubespbp_mbanking.fragment.FragmentRegister1;
 
 public class AuthenticationActivity extends AppCompatActivity {
 
