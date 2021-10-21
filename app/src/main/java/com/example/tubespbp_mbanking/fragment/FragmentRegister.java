@@ -17,6 +17,11 @@ import com.example.tubespbp_mbanking.database.DatabaseUser;
 import com.example.tubespbp_mbanking.databinding.FragmentRegisterBinding;
 import com.example.tubespbp_mbanking.model.User;
 
+import java.util.List;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FragmentRegister#newInstance} factory method to
@@ -28,13 +33,16 @@ public class FragmentRegister extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    User userRegister;
+    User userRegister, userCheck;
     FragmentRegisterBinding binding;
+    private List<User> userList;
 
     public FragmentRegister() {
         // Required empty public constructor
@@ -102,19 +110,39 @@ public class FragmentRegister extends Fragment {
     public View.OnClickListener btnRegister = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            getUserByEmail(userRegister.getEmail());
+            if(!userList.isEmpty()) {
+                userCheck = userList.get(0);
+            }
             if(userRegister.getFirstName().isEmpty()) {
                 Toast.makeText(getActivity(), "Nama depan tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else if(userRegister.getLastName().isEmpty()) {
                 Toast.makeText(getActivity(), "Nama belakang tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else if(userRegister.getEmail().isEmpty()) {
                 Toast.makeText(getActivity(), "Email tidak boleh kosong", Toast.LENGTH_SHORT).show();
+            } else if(!isValidEmail(userRegister.getEmail())) {
+                Toast.makeText(getActivity(), "Format email salah", Toast.LENGTH_SHORT).show();
+            } else if(!userList.isEmpty() && userCheck.getEmail().equals(userRegister.getEmail())) {
+                Toast.makeText(getActivity(), "Email sudah ada", Toast.LENGTH_SHORT).show();
             } else if(userRegister.getPassword().isEmpty()) {
                 Toast.makeText(getActivity(), "Password tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else if(userRegister.getAccountNumber().isEmpty()) {
                 Toast.makeText(getActivity(), "Nomor rekening tidak boleh kosong", Toast.LENGTH_SHORT).show();
+            } else if(!isNumeric(userRegister.getAccountNumber())) {
+                Toast.makeText(getActivity(), "Nomor rekening harus angka", Toast.LENGTH_SHORT).show();
+            } else if(!userList.isEmpty() && userCheck.getAccountNumber().equals(userRegister.getAccountNumber())) {
+                Toast.makeText(getActivity(), "Nomor rekening sudah ada", Toast.LENGTH_SHORT).show();
             } else if(userRegister.getPin().isEmpty()) {
-                Toast.makeText(getActivity(), "Pink tidak boleh ksoong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Pin tidak boleh ksoong", Toast.LENGTH_SHORT).show();
+            } else if(!isNumeric(userRegister.getPin())) {
+                Toast.makeText(getActivity(), "Pin harus angka", Toast.LENGTH_SHORT).show();
+            } else if(userRegister.getPin().length() != 6) {
+                Toast.makeText(getActivity(), "Pin harus 6 digit", Toast.LENGTH_SHORT).show();
             } else {
+                Random rand = new Random();
+                int n = rand.nextInt(10000000);
+                n += 10000001;
+                userRegister.setNominal(n);
                 addUser();
                 Toast.makeText(getActivity(), "Berhasil menambahkan user", Toast.LENGTH_SHORT).show();
                 changeFragment(new FragmentLogin());
@@ -141,4 +169,35 @@ public class FragmentRegister extends Fragment {
         AddUser addUser = new AddUser(  );
         addUser.execute();
     }
+
+    private void getUserByEmail(String search) {
+        userList = DatabaseUser.getInstance(getActivity().getApplicationContext())
+                .getDatabase()
+                .userDao()
+                .getUserByEmail(search);
+    }
+
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            Integer i = Integer.parseInt(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isValidEmail(String email)
+    {
+        if (email != null)
+        {
+            Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+            return matcher.find();
+        }
+        return false;
+    }
+
+
 }

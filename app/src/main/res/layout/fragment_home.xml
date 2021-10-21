@@ -1,14 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.FragmentHome">
+    <data>
+        <variable
+            name="user"
+            type="com.example.tubespbp_mbanking.model.User" />
+        <variable
+            name="fragment"
+            type="com.example.tubespbp_mbanking.fragment.FragmentHome" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/ivHome"
+            android:src="@drawable/rectangle_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/txtHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/home_title"
+            android:textColor="@color/coral"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="@+id/ivHome"
+            app:layout_constraintHorizontal_bias="0.471"
+            app:layout_constraintStart_toStartOf="@+id/ivHome"
+            app:layout_constraintTop_toTopOf="@id/ivHome" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-</FrameLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:id="@+id/rectHome"
+            android:src="@drawable/rectangle_turquoise_rounded"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintTop_toBottomOf="@id/ivHome"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:id="@+id/txt_nama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@{user.firstName + ` ` + user.lastName}"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@id/rectHome"
+            app:layout_constraintTop_toTopOf="@id/rectHome"
+            tools:text="Adrian Metanoia Gawa"/>
+
+        <TextView
+            android:id="@+id/txt_account_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@{user.accountNumber}"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/rectHome"
+            app:layout_constraintTop_toBottomOf="@id/txt_nama"
+            tools:text="0324 4321 4444 3579"/>
+
+        <TextView
+            android:id="@+id/txt_nominal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@{`Rp ` + String.valueOf(user.nominal) + `,-`}"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/rectHome"
+            app:layout_constraintTop_toBottomOf="@id/txt_account_number"
+            tools:text="Rp XXX.XXX.XXX,-"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="192dp"
+            android:id="@+id/rectAction"
+            android:src="@drawable/rectangle_white_rounded"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintTop_toBottomOf="@id/rectHome"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:id="@+id/txt_coming_soon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Coming soon!"
+            android:textColor="@color/coral"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@id/rectAction"
+            app:layout_constraintEnd_toEndOf="@id/rectAction"
+            app:layout_constraintTop_toTopOf="@id/rectAction"
+            app:layout_constraintBottom_toBottomOf="@id/rectAction"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -2,6 +2,7 @@ package com.example.tubespbp_mbanking.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 
 import android.os.Bundle;
@@ -26,6 +27,18 @@ public class AuthenticationActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.layout_auth_frag,fragment)
+//                .addToBackStack(null)
                 .commit();
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        FragmentManager fm = getSupportFragmentManager();
+//        if (fm.getBackStackEntryCount() > 0) {
+//            fm.popBackStack();
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
+
 }

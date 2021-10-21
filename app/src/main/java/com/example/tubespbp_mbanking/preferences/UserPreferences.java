@@ -19,6 +19,7 @@ public class UserPreferences {
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_ACCOUNTNUMBER = "accountNumber";
     public static final String KEY_PIN = "pin";
+    public static final String KEY_NOMINAL = "nominal";
 
     public UserPreferences(Context context) {
         this.context = context;
@@ -34,14 +35,15 @@ public class UserPreferences {
         editor.putString(KEY_EMAIL, userLogin.getEmail());
         editor.putString(KEY_PASSWORD, userLogin.getPassword());
         editor.putString(KEY_ACCOUNTNUMBER, userLogin.getAccountNumber());
-        editor.putString(KEY_PIN, userLogin.getPassword());
+        editor.putString(KEY_PIN, userLogin.getPin());
+        editor.putString(KEY_NOMINAL, String.valueOf(userLogin.getNominal()));
 
         editor.commit();
     }
 
     public User getUserLogin() {
-        int id;
-        String stringId, firstName, lastName, email, password, accountNumber, pin;
+        int id, nominal;
+        String stringId, firstName, lastName, email, password, accountNumber, pin, stringNominal;
 
         stringId = sharedPreferences.getString(KEY_ID, null);
         id = Integer.parseInt(stringId);
@@ -51,8 +53,10 @@ public class UserPreferences {
         password = sharedPreferences.getString(KEY_PASSWORD, null);
         accountNumber = sharedPreferences.getString(KEY_ACCOUNTNUMBER, null);
         pin = sharedPreferences.getString(KEY_PIN, null);
+        stringNominal = sharedPreferences.getString(KEY_NOMINAL, null);
+        nominal = Integer.parseInt(stringNominal);
 
-        return new User(id, firstName, lastName, email, password, accountNumber, pin);
+        return new User(id, firstName, lastName, email, password, accountNumber, pin, nominal);
     }
 
     public boolean checkLogin() {

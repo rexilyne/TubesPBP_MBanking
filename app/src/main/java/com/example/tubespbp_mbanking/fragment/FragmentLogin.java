@@ -97,13 +97,14 @@ public class FragmentLogin extends Fragment {
         userLogin.setPassword("");
         binding.setUser(userLogin);
 
-//        checkLogin();
+        checkLogin();
     }
 
     public void changeFragment(Fragment fragment){
         getParentFragmentManager()
                 .beginTransaction()
                 .replace(R.id.layout_auth_frag,fragment)
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -118,7 +119,7 @@ public class FragmentLogin extends Fragment {
                 }
                 if (userLogin.getEmail().trim().equals(userList.get(0).getEmail())
                         && userLogin.getPassword().trim().equals(userList.get(0).getPassword())) {
-                    userPreferences.setLogin(userLogin);
+                    userPreferences.setLogin(userList.get(0));
                     checkLogin();
                 } else {
                     Toast.makeText(getActivity(), "Username atau Password salah", Toast.LENGTH_SHORT).show();

@@ -31,11 +31,14 @@ public class User extends BaseObservable {
     @ColumnInfo(name = "pin")
     private String pin;
 
+    @ColumnInfo(name = "nominal")
+    private int nominal;
+
     public User() {}
 
     @Ignore
     public User(int id, String firstName, String lastName, String email,
-                String password, String accountNumber, String pin) {
+                String password, String accountNumber, String pin, int nominal) {
         this.setId(id);
         this.setFirstName(firstName);
         this.setLastName(lastName);
@@ -43,6 +46,7 @@ public class User extends BaseObservable {
         this.setPassword(password);
         this.setAccountNumber(accountNumber);
         this.setPin(pin);
+        this.setNominal(nominal);
     }
 
     @Bindable
@@ -113,5 +117,15 @@ public class User extends BaseObservable {
     public void setPin(String pin) {
         this.pin = pin;
         notifyPropertyChanged(BR.pin);
+    }
+
+    @Bindable
+    public int getNominal() {
+        return nominal;
+    }
+
+    public void setNominal(int nominal) {
+        this.nominal = nominal;
+        notifyPropertyChanged(BR.nominal);
     }
 }
