@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    card_view:cardCornerRadius="6dp"
+    android:elevation="6dp">
+    <LinearLayout
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            card_view:cardCornerRadius="40dp">
+            <ImageView
+                android:id="@+id/iconAktivitas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/skittle" />
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="-40dp"
+        android:layout_width="120dp"
+        android:layout_height="95dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_transaksi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:layout_marginTop="22dp"
+            android:text="Transaksi" />
+        <TextView
+            android:id="@+id/tv_keterangan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8dp"
+            android:text="ABC - XXXXXXXXXX" />
+        <TextView
+            android:id="@+id/tv_no_referensi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8dp"
+            android:text="No Ref - XXXXXXXXXXXX" />
+        <TextView
+            android:id="@+id/tv_tanggal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8dp"
+            android:text="02 Oktober 2021 12.19" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_biaya"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="#00CED1"
+            android:textAlignment="center"
+            android:textSize="10dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="42dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Berhasil" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
