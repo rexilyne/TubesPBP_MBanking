@@ -1,14 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.FragmentDetailAkun">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+        <variable
+            name="user"
+            type="com.example.tubespbp_mbanking.model.User" />
+        <variable
+            name="fragment"
+            type="com.example.tubespbp_mbanking.fragment.FragmentDetailAkun" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/grey"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/ivAkun"
+            android:src="@drawable/rectangle_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/txtAkun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/detail_akun_title"
+            android:textColor="@color/coral"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="@+id/ivAkun"
+            app:layout_constraintHorizontal_bias="0.471"
+            app:layout_constraintStart_toStartOf="@+id/ivAkun"
+            app:layout_constraintTop_toTopOf="@id/ivAkun" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/iconCard"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            card_view:cardCornerRadius="80dp"
+            app:layout_constraintTop_toBottomOf="@id/ivAkun"
+            app:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent">
+            <ImageView
+                android:id="@+id/iconMutasi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ayam"/>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/label_first_name"
+            android:text="First Name"
+            android:textColor="@color/black"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:labelFor="@id/et_first_name"
+            app:layout_constraintTop_toBottomOf="@id/iconCard"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_first_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_first_name"
+            app:hintEnabled="false"
+            android:background="@color/white"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Name"
+                android:text="@={user.firstName}"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/label_last_name"
+            android:text="Last Name"
+            android:textColor="@color/black"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:labelFor="@id/et_last_name"
+            app:layout_constraintTop_toBottomOf="@id/et_first_name"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_last_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_last_name"
+            app:hintEnabled="false"
+            android:background="@color/white"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name"
+                android:text="@={user.lastName}"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/label_email"
+            android:text="Email"
+            android:textColor="@color/black"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:labelFor="@id/et_email"
+            app:layout_constraintTop_toBottomOf="@id/et_last_name"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_email"
+            app:hintEnabled="false"
+            android:background="@color/white"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:text="@={user.email}"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/label_password"
+            android:text="Password"
+            android:textColor="@color/black"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:labelFor="@id/et_password"
+            app:layout_constraintTop_toBottomOf="@id/et_email"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_password"
+            app:hintEnabled="false"
+            android:background="@color/white"
+            app:passwordToggleEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:text="@={user.password}"
+                android:inputType="textPassword"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="64dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/turquoise"
+            android:text="Update"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{fragment.btnUpdate}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
