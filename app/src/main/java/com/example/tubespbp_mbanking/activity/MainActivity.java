@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        getSupportActionBar().hide();;
+        getSupportActionBar().hide();
 
         changeFragment(new FragmentHome());
     }

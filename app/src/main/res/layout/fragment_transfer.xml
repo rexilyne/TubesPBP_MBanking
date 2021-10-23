@@ -1,14 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.FragmentTransfer">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+        <variable
+            name="user"
+            type="com.example.tubespbp_mbanking.model.User" />
+        <variable
+            name="aktivitas"
+            type="com.example.tubespbp_mbanking.model.Aktivitas" />
+        <variable
+            name="fragment"
+            type="com.example.tubespbp_mbanking.fragment.FragmentTransfer" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/grey">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/ivTransfer"
+            android:src="@drawable/rectangle_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/txtTransfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/transfer_title"
+            android:textColor="@color/coral"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="@+id/ivTransfer"
+            app:layout_constraintHorizontal_bias="0.471"
+            app:layout_constraintStart_toStartOf="@+id/ivTransfer"
+            app:layout_constraintTop_toTopOf="@id/ivTransfer" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:id="@+id/rectTransfer"
+            android:src="@drawable/rectangle_turquoise_rounded"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintTop_toBottomOf="@id/ivTransfer"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:id="@+id/txt_nama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@{user.firstName + ` ` + user.lastName}"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@id/rectTransfer"
+            app:layout_constraintTop_toTopOf="@id/rectTransfer"
+            tools:text="Adrian Metanoia Gawa"/>
+
+        <TextView
+            android:id="@+id/txt_account_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@{user.accountNumber}"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/rectTransfer"
+            app:layout_constraintTop_toBottomOf="@id/txt_nama"
+            tools:text="0324 4321 4444 3579"/>
+
+        <TextView
+            android:id="@+id/txt_nominal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@{`Rp ` + String.valueOf(user.nominal) + `,-`}"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/rectTransfer"
+            app:layout_constraintTop_toBottomOf="@id/txt_account_number"
+            tools:text="Rp XXX.XXX.XXX,-"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/label_rekening_tujuan"
+            android:text="Rekening Tujuan"
+            android:textColor="@color/black"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:labelFor="@id/et_rekening_tujuan"
+            app:layout_constraintTop_toBottomOf="@id/rectTransfer"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_rekening_tujuan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_rekening_tujuan"
+            app:hintEnabled="false"
+            android:background="@color/white"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Rekening Tujuan"
+                android:text="@={aktivitas.accountNumberDest}"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/label_jumlah_transfer"
+            android:text="Jumlah Transfer"
+            android:textColor="@color/black"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:labelFor="@id/et_jumlah_transfer"
+            app:layout_constraintTop_toBottomOf="@id/et_rekening_tujuan"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_jumlah_transfer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_jumlah_transfer"
+            app:hintEnabled="false"
+            android:background="@color/white"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Jumlah Transfer"
+                android:text="@={aktivitas.stringNominal}"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/label_keterangan"
+            android:text="Keterangan"
+            android:textColor="@color/black"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:labelFor="@id/et_keterangan"
+            app:layout_constraintTop_toBottomOf="@id/et_jumlah_transfer"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_keterangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_keterangan"
+            app:hintEnabled="false"
+            android:background="@color/white"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Keterangan"
+                android:text="@={aktivitas.keterangan}"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTransfer"
+            android:layout_width="128dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="64dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/turquoise"
+            android:text="Transfer"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="@{fragment.btnTransfer}"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBatal"
+            android:layout_width="128dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="64dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/coral"
+            android:text="Batal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnTransfer"
+            android:onClick="@{fragment.btnBatal}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

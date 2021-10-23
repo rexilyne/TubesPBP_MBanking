@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.FragmentMutasi">
+    tools:context=".fragment.FragmentMutasiAlt">
     <data>
         <variable
             name="user"
             type="com.example.tubespbp_mbanking.model.User" />
         <variable
             name="fragment"
-            type="com.example.tubespbp_mbanking.fragment.FragmentMutasi" />
+            type="com.example.tubespbp_mbanking.fragment.FragmentMutasiAlt" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -23,7 +23,8 @@
             android:src="@drawable/rectangle_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
         <TextView
             android:id="@+id/txtMutasi"
             android:layout_width="wrap_content"
@@ -38,7 +39,7 @@
             app:layout_constraintTop_toTopOf="@id/ivMutasi" />
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="210dp"
             android:id="@+id/rectMutasi"
             android:src="@drawable/rectangle_white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,9 +75,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="5dp"
-            android:text="Pilih Tanggal"
             app:layout_constraintStart_toStartOf="@id/iconDate"
             android:textSize="12dp"
+            android:text="Tanggal Awal"
             app:layout_constraintTop_toBottomOf="@id/txt_cari" />
         <TextView
             android:id="@+id/txt_hari"
@@ -84,11 +85,24 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:textSize="12dp"
-            android:text="Hari ini"
+            android:text="Pilih Tanggal"
             app:layout_constraintStart_toStartOf="@id/iconDate"
             app:layout_constraintTop_toBottomOf="@id/txt_pilih"
             android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/btnTglAwal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="51dp"
+            android:layout_marginEnd="24dp"
+            android:text=">"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/rectMutasi"
+            app:layout_constraintTop_toTopOf="@id/rectMutasi"
+            />
         <View
+            android:id="@+id/garis"
             android:layout_width="318dp"
             android:layout_height="2px"
             android:layout_marginTop="8sp"
@@ -96,6 +110,58 @@
             app:layout_constraintStart_toStartOf="@id/rectMutasi"
             app:layout_constraintEnd_toEndOf="@id/rectMutasi"
             app:layout_constraintTop_toBottomOf="@id/txt_hari"
+            />
+        <ImageView
+            android:id="@+id/iconDate2"
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_baseline_date_range_24"
+            app:layout_constraintStart_toStartOf="@id/rectMutasi"
+            app:layout_constraintTop_toBottomOf="@id/garis"
+            />
+        <TextView
+            android:id="@+id/txt_pilih2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@id/iconDate2"
+            android:textSize="12dp"
+            android:text="Tanggal Akhir"
+            app:layout_constraintTop_toBottomOf="@id/garis" />
+        <TextView
+            android:id="@+id/txt_hari2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:textSize="12dp"
+            android:text="Pilih Tanggal"
+            app:layout_constraintStart_toStartOf="@id/iconDate2"
+            app:layout_constraintTop_toBottomOf="@id/txt_pilih2"
+            android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/btnTglAkhir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="102dp"
+            android:layout_marginEnd="24dp"
+            android:text=">"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/rectMutasi"
+            app:layout_constraintTop_toTopOf="@id/rectMutasi"
+            />
+        <View
+            android:id="@+id/garis2"
+            android:layout_width="318dp"
+            android:layout_height="2px"
+            android:layout_marginTop="8sp"
+            android:background="@color/black"
+            app:layout_constraintStart_toStartOf="@id/rectMutasi"
+            app:layout_constraintEnd_toEndOf="@id/rectMutasi"
+            app:layout_constraintTop_toBottomOf="@id/txt_hari2"
             />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCari"
@@ -108,7 +174,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/turquoise"
             android:text="Cari"
-            app:layout_constraintTop_toBottomOf="@id/txt_hari"
+            app:layout_constraintTop_toBottomOf="@id/garis2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             />

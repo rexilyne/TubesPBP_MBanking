@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">TubesPBP_MBanking</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoicmV4aWx5bmUiLCJhIjoiY2t1bzAwNGJnMm9pNzJvcnVwbGtybW83ayJ9.IJY00qgmFvwur55RuTO6tQ</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login_title"><b><i>M-Banking</i></b></string>
@@ -8,8 +9,12 @@
     <string name="link_title"><b><i>Link Bank Account</i></b></string>
     <string name="akun_title"><b><i>Akun</i></b></string>
     <string name="home_title"><b><i>Home</i></b></string>
+    <string name="mutasi_title"><b><i>Mutasi</i></b></string>
     <string name="kontak_kami_title"><b><i>Kontak Kami</i></b></string>
     <string name="detail_akun_title"><b><i>Detail Akun</i></b></string>
+    <string name="transfer_title"><b><i>Transfer</i></b></string>
+    <string name="aktivitas_title"><b><i>Aktivitas</i></b></string>
+    <string name="lokasi_title"><b><i>Lokasi ATM</i></b></string>
     <string name="splash"><font color="#00CED1">M</font><font color="#FF7F50">Banking</font></string>
     <string name="kontak">Hubungi Kami<br></br>Silakan hubungi kami kapan pun</string>
 </resources>

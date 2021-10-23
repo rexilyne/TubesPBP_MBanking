@@ -211,18 +211,16 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnUpdate"
-            android:layout_width="match_parent"
+            android:layout_width="128dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="64dp"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_weight="1"
             android:backgroundTint="@color/turquoise"
             android:text="Update"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             android:onClick="@{fragment.btnUpdate}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

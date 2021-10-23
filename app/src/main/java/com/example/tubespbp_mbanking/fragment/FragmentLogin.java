@@ -93,8 +93,6 @@ public class FragmentLogin extends Fragment {
         userList = new ArrayList<>();
 
         userLogin = new User();
-        userLogin.setEmail("");
-        userLogin.setPassword("");
         binding.setUser(userLogin);
 
         checkLogin();
@@ -104,7 +102,7 @@ public class FragmentLogin extends Fragment {
         getParentFragmentManager()
                 .beginTransaction()
                 .replace(R.id.layout_auth_frag,fragment)
-                .addToBackStack(null)
+                .addToBackStack("login")
                 .commit();
     }
 
@@ -136,8 +134,8 @@ public class FragmentLogin extends Fragment {
     };
 
     private boolean validateForm() {
-        if(userLogin.getEmail().trim().isEmpty() ||
-                userLogin.getPassword().trim().isEmpty()) {
+        if(binding.etEmail.getEditText().getText().toString().isEmpty() ||
+                binding.etPassword.getEditText().getText().toString().isEmpty()) {
             Toast.makeText(getActivity(), "Email atau Password kosong", Toast.LENGTH_SHORT).show();
             return false;
         }

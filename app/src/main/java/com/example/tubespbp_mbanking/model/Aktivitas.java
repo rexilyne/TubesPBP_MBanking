@@ -5,6 +5,7 @@ import androidx.databinding.Bindable;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "aktivitas")
@@ -42,6 +43,9 @@ public class Aktivitas extends BaseObservable {
     @ColumnInfo(name = "total")
     private int total;
 
+    public Aktivitas() {}
+
+    @Ignore
     public Aktivitas(int id, String accountNumberOri, String accountNumberDest,
                      int noReferensi, String nama, String tanggal, int nominal,
                      String jenis, String keterangan, int biayaAdmin, int total) {
@@ -167,5 +171,19 @@ public class Aktivitas extends BaseObservable {
     public void setTotal(int total) {
         this.total = total;
         notifyPropertyChanged(BR.total);
+    }
+
+    @Bindable
+    public String getStringNominal() {
+        return String.valueOf(nominal);
+    }
+
+    public void setStringNominal(String nominal) {
+        if(nominal.isEmpty()) {
+            this.nominal = 0;
+        } else {
+            this.nominal = Integer.parseInt(nominal);
+        }
+        notifyPropertyChanged(BR.nominal);
     }
 }

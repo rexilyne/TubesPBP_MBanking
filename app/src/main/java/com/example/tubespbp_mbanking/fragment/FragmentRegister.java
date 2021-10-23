@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,16 +92,11 @@ public class FragmentRegister extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         userRegister = new User();
-        userRegister.setFirstName("");
-        userRegister.setLastName("");
-        userRegister.setEmail("");
-        userRegister.setPassword("");
-        userRegister.setAccountNumber("");
-        userRegister.setPin("");
         binding.setUser(userRegister);
     }
 
     public void changeFragment(Fragment fragment){
+        getParentFragmentManager().popBackStack("login", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         getParentFragmentManager()
                 .beginTransaction()
                 .replace(R.id.layout_auth_frag,fragment)
@@ -114,25 +110,25 @@ public class FragmentRegister extends Fragment {
             if(!userList.isEmpty()) {
                 userCheck = userList.get(0);
             }
-            if(userRegister.getFirstName().isEmpty()) {
+            if(binding.etFirstName.getEditText().getText().toString().isEmpty()) {
                 Toast.makeText(getActivity(), "Nama depan tidak boleh kosong", Toast.LENGTH_SHORT).show();
-            } else if(userRegister.getLastName().isEmpty()) {
+            } else if(binding.etLastName.getEditText().getText().toString().isEmpty()) {
                 Toast.makeText(getActivity(), "Nama belakang tidak boleh kosong", Toast.LENGTH_SHORT).show();
-            } else if(userRegister.getEmail().isEmpty()) {
+            } else if(binding.etEmail.getEditText().getText().toString().isEmpty()) {
                 Toast.makeText(getActivity(), "Email tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else if(!isValidEmail(userRegister.getEmail())) {
                 Toast.makeText(getActivity(), "Format email salah", Toast.LENGTH_SHORT).show();
             } else if(!userList.isEmpty() && userCheck.getEmail().equals(userRegister.getEmail())) {
                 Toast.makeText(getActivity(), "Email sudah ada", Toast.LENGTH_SHORT).show();
-            } else if(userRegister.getPassword().isEmpty()) {
+            } else if(binding.etPassword.getEditText().getText().toString().isEmpty()) {
                 Toast.makeText(getActivity(), "Password tidak boleh kosong", Toast.LENGTH_SHORT).show();
-            } else if(userRegister.getAccountNumber().isEmpty()) {
+            } else if(binding.etAccountNumber.getEditText().getText().toString().isEmpty()) {
                 Toast.makeText(getActivity(), "Nomor rekening tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else if(!isNumeric(userRegister.getAccountNumber())) {
                 Toast.makeText(getActivity(), "Nomor rekening harus angka", Toast.LENGTH_SHORT).show();
             } else if(!userList.isEmpty() && userCheck.getAccountNumber().equals(userRegister.getAccountNumber())) {
                 Toast.makeText(getActivity(), "Nomor rekening sudah ada", Toast.LENGTH_SHORT).show();
-            } else if(userRegister.getPin().isEmpty()) {
+            } else if(binding.etPin.getEditText().getText().toString().isEmpty()) {
                 Toast.makeText(getActivity(), "Pin tidak boleh ksoong", Toast.LENGTH_SHORT).show();
             } else if(!isNumeric(userRegister.getPin())) {
                 Toast.makeText(getActivity(), "Pin harus angka", Toast.LENGTH_SHORT).show();
@@ -146,6 +142,7 @@ public class FragmentRegister extends Fragment {
                 addUser();
                 Toast.makeText(getActivity(), "Berhasil menambahkan user", Toast.LENGTH_SHORT).show();
                 changeFragment(new FragmentLogin());
+
             }
         }
     };

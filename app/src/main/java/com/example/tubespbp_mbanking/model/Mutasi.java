@@ -100,4 +100,18 @@ public class Mutasi extends BaseObservable {
         this.jenis = jenis;
         notifyPropertyChanged(BR.jenis);
     }
+
+    @Bindable
+    public String getStringNominal() {
+        return String.valueOf(nominal);
+    }
+
+    public void setStringNominal(String nominal) {
+        if(nominal.isEmpty()) {
+            this.nominal = 0;
+        } else {
+            this.nominal = Integer.parseInt(nominal);
+        }
+        notifyPropertyChanged(BR.nominal);
+    }
 }
