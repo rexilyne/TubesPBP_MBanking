@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">TubesPBP_MBanking</string>
+    <!-- Mapbox -->
     <string name="mapbox_access_token">pk.eyJ1IjoicmV4aWx5bmUiLCJhIjoiY2t1bzAwNGJnMm9pNzJvcnVwbGtybW83ayJ9.IJY00qgmFvwur55RuTO6tQ</string>
+    <string name="user_location_permission_explanation">Apakah diperbolehkan?</string>
+    <string name="user_location_permission_not_granted">Ditolak kalian semua</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login_title"><b><i>M-Banking</i></b></string>

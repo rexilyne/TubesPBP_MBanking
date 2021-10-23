@@ -10,12 +10,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.tubespbp_mbanking.R;
 import com.example.tubespbp_mbanking.activity.AuthenticationActivity;
-import com.example.tubespbp_mbanking.databinding.FragmentAkunBinding;
 import com.example.tubespbp_mbanking.databinding.FragmentHomeBinding;
 import com.example.tubespbp_mbanking.model.User;
 import com.example.tubespbp_mbanking.preferences.UserPreferences;
