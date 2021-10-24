@@ -6,7 +6,6 @@
     tools:context=".fragment.FragmentDetailTransfer">
 
     <data>
-
         <variable
             name="user"
             type="com.example.tubespbp_mbanking.model.User" />
@@ -14,6 +13,10 @@
         <variable
             name="fragment"
             type="com.example.tubespbp_mbanking.fragment.FragmentDetailTransfer" />
+
+        <variable
+            name="aktivitas"
+            type="com.example.tubespbp_mbanking.model.Aktivitas" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -94,7 +97,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12sp"
-            android:text="ABC - XXXXXXXXXX"
+            android:layout_marginEnd="16dp"
+            android:text="@{aktivitas.nama + ` - ` + aktivitas.accountNumberDest}"
+            tools:text="ABC - XXXXXXXXXX"
             android:textSize="8dp"
             app:layout_constraintStart_toEndOf="@+id/iconTransfer"
             app:layout_constraintTop_toBottomOf="@id/tv_transaksi" />
@@ -104,7 +109,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12sp"
-            android:text="No Ref - XXXXXXXXXXXX"
+            android:layout_marginEnd="16dp"
+            android:text="@{`No Ref - ` + aktivitas.noReferensi}"
+            tools:text="No Ref - XXXXXXXXXXXX"
             android:textSize="8dp"
             app:layout_constraintStart_toEndOf="@+id/iconTransfer"
             app:layout_constraintTop_toBottomOf="@id/tv_keterangan" />
@@ -114,7 +121,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12sp"
-            android:text="02 Oktober 2021 12.19"
+            android:layout_marginEnd="16dp"
+            android:text="@{aktivitas.tanggal}"
+            tools:text="02 Oktober 2021 12.19"
             android:textSize="8dp"
             app:layout_constraintStart_toEndOf="@+id/iconTransfer"
             app:layout_constraintTop_toBottomOf="@id/tv_no_referensi" />
@@ -130,7 +139,7 @@
             android:text="Berhasil"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintEnd_toEndOf="@+id/rectTransfer"
             app:layout_constraintTop_toTopOf="@id/rectTransfer" />
 
@@ -160,11 +169,12 @@
             android:id="@+id/txt_sumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:layout_marginEnd="24sp"
-            android:text="XXXXXXXXXXXX"
+            android:layout_marginTop="25sp"
+            android:layout_marginEnd="16dp"
+            android:text="@{aktivitas.accountNumberOri}"
+            tools:text="XXXXXXXXXXXX"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintEnd_toEndOf="@+id/rectTransfer"
             app:layout_constraintTop_toBottomOf="@id/garis" />
 
@@ -184,10 +194,10 @@
             android:id="@+id/txt_jenis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
+            android:layout_marginTop="25sp"
             android:text="Transfer"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_sumber"
             app:layout_constraintTop_toBottomOf="@id/txt_sumber" />
 
@@ -207,10 +217,12 @@
             android:id="@+id/txt_nomorRekening"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:text="XYXYXYXYXYXY"
+            android:layout_marginTop="25sp"
+            android:layout_marginEnd="16dp"
+            android:text="@{aktivitas.accountNumberDest}"
+            tools:text="XYXYXYXYXYXY"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_jenis"
             app:layout_constraintTop_toBottomOf="@id/txt_jenis" />
 
@@ -230,10 +242,12 @@
             android:id="@+id/txt_namaPelanggan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:text="Jeje"
+            android:layout_marginTop="25sp"
+            android:layout_marginEnd="16dp"
+            android:text="@{aktivitas.nama}"
+            tools:text="Jeje"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_nomorRekening"
             app:layout_constraintTop_toBottomOf="@id/txt_nomorRekening" />
 
@@ -253,10 +267,12 @@
             android:id="@+id/txt_ket"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:text="Bayar Hutang"
+            android:layout_marginTop="25sp"
+            android:layout_marginEnd="16dp"
+            android:text="@{aktivitas.keterangan}"
+            tools:text="Bayar Hutang"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_namaPelanggan"
             app:layout_constraintTop_toBottomOf="@id/txt_namaPelanggan" />
 
@@ -286,10 +302,12 @@
             android:id="@+id/txt_nominal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:text="Rp.50.000,00"
+            android:layout_marginTop="25sp"
+            android:layout_marginEnd="16dp"
+            android:text="@{`Rp ` + aktivitas.nominal + `,00`}"
+            tools:text="Rp.50.000,00"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_namaPelanggan"
             app:layout_constraintTop_toBottomOf="@id/garis2" />
 
@@ -309,10 +327,12 @@
             android:id="@+id/txt_biaya"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:text="Rp.1.000,00"
+            android:layout_marginTop="25sp"
+            android:layout_marginEnd="16dp"
+            android:text="@{`Rp ` + aktivitas.biayaAdmin + `,00`}"
+            tools:text="Rp.1.000,00"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_nominal"
             app:layout_constraintTop_toBottomOf="@id/txt_nominal" />
 
@@ -342,10 +362,12 @@
             android:id="@+id/txt_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:text="Rp.51.000,00"
+            android:layout_marginTop="25sp"
+            android:layout_marginEnd="16dp"
+            android:text="@{`Rp ` + aktivitas.total + `,00`}"
+            tools:text="Rp.51.000,00"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_biaya"
             app:layout_constraintTop_toBottomOf="@id/garis3" />
 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.tubespbp_mbanking.R;
 import com.example.tubespbp_mbanking.adapter.AktivitasAdapter;
@@ -97,11 +98,12 @@ public class FragmentAktivitas extends Fragment {
 
         aktivitasList = new ArrayList<>();
         getAktivitasByAccNumber(userLogin.getAccountNumber());
+        Toast.makeText(this.getContext(), aktivitasList.get(0).getAccountNumberOri(), Toast.LENGTH_SHORT).show();
 
-        aktivitasAdapter = new AktivitasAdapter(aktivitasList);
+        aktivitasAdapter = new AktivitasAdapter(aktivitasList, getActivity());
 
         recyclerView = binding.rvAktivitas;
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(aktivitasAdapter);
     }
 

@@ -1,45 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".fragment.FragmentDetailAktivitas">
+
     <data>
         <variable
             name="user"
             type="com.example.tubespbp_mbanking.model.User" />
+
         <variable
             name="fragment"
             type="com.example.tubespbp_mbanking.fragment.FragmentDetailAktivitas" />
+
+        <variable
+            name="aktivitas"
+            type="com.example.tubespbp_mbanking.model.Aktivitas" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/grey">
+
         <ImageView
+            android:id="@+id/ivTransfer"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:id="@+id/ivAktivitas"
             android:src="@drawable/rectangle_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txtAktivitas"
+            android:id="@+id/txtTransfer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/aktivitas_title"
             android:textColor="@color/coral"
             android:textSize="32sp"
-            app:layout_constraintEnd_toEndOf="@+id/ivAktivitas"
+            app:layout_constraintEnd_toEndOf="@+id/ivTransfer"
             app:layout_constraintHorizontal_bias="0.471"
-            app:layout_constraintStart_toStartOf="@+id/ivAktivitas"
-            app:layout_constraintTop_toTopOf="@id/ivAktivitas" />
+            app:layout_constraintStart_toStartOf="@+id/ivTransfer"
+            app:layout_constraintTop_toTopOf="@id/ivTransfer" />
 
         <ImageView
-            android:id="@+id/rectAktivitas"
+            android:id="@+id/rectTransfer"
             android:layout_width="match_parent"
             android:layout_height="450dp"
             android:layout_marginStart="24dp"
@@ -48,7 +56,7 @@
             android:src="@drawable/rectangle_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivAktivitas" />
+            app:layout_constraintTop_toBottomOf="@id/ivTransfer" />
 
         <LinearLayout
             android:id="@+id/iconTransfer"
@@ -57,8 +65,8 @@
             android:layout_marginStart="20sp"
             android:layout_marginTop="26sp"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/rectAktivitas"
-            app:layout_constraintTop_toTopOf="@id/rectAktivitas">
+            app:layout_constraintStart_toStartOf="@id/rectTransfer"
+            app:layout_constraintTop_toTopOf="@id/rectTransfer">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -82,14 +90,16 @@
             android:textColor="@color/black"
             android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/iconTransfer"
-            app:layout_constraintTop_toTopOf="@id/rectAktivitas" />
+            app:layout_constraintTop_toTopOf="@id/rectTransfer" />
 
         <TextView
             android:id="@+id/tv_keterangan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12sp"
-            android:text="ABC - XXXXXXXXXX"
+            android:layout_marginEnd="16dp"
+            android:text="@{aktivitas.nama + ` - ` + aktivitas.accountNumberDest}"
+            tools:text="ABC - XXXXXXXXXX"
             android:textSize="8dp"
             app:layout_constraintStart_toEndOf="@+id/iconTransfer"
             app:layout_constraintTop_toBottomOf="@id/tv_transaksi" />
@@ -99,7 +109,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12sp"
-            android:text="No Ref - XXXXXXXXXXXX"
+            android:layout_marginEnd="16dp"
+            android:text="@{`No Ref - ` + aktivitas.noReferensi}"
+            tools:text="No Ref - XXXXXXXXXXXX"
             android:textSize="8dp"
             app:layout_constraintStart_toEndOf="@+id/iconTransfer"
             app:layout_constraintTop_toBottomOf="@id/tv_keterangan" />
@@ -109,7 +121,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12sp"
-            android:text="02 Oktober 2021 12.19"
+            android:layout_marginEnd="16dp"
+            android:text="@{aktivitas.tanggal}"
+            tools:text="02 Oktober 2021 12.19"
             android:textSize="8dp"
             app:layout_constraintStart_toEndOf="@+id/iconTransfer"
             app:layout_constraintTop_toBottomOf="@id/tv_no_referensi" />
@@ -125,9 +139,9 @@
             android:text="Berhasil"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="10dp"
-            app:layout_constraintEnd_toEndOf="@+id/rectAktivitas"
-            app:layout_constraintTop_toTopOf="@id/rectAktivitas" />
+            android:textSize="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/rectTransfer"
+            app:layout_constraintTop_toTopOf="@id/rectTransfer" />
 
         <View
             android:id="@+id/garis"
@@ -135,8 +149,8 @@
             android:layout_height="2px"
             android:layout_marginTop="8sp"
             android:background="@color/black"
-            app:layout_constraintEnd_toEndOf="@id/rectAktivitas"
-            app:layout_constraintStart_toStartOf="@id/rectAktivitas"
+            app:layout_constraintEnd_toEndOf="@id/rectTransfer"
+            app:layout_constraintStart_toStartOf="@id/rectTransfer"
             app:layout_constraintTop_toBottomOf="@id/tv_tanggal" />
 
         <TextView
@@ -148,19 +162,20 @@
             android:text="Sumber Dana"
             android:textColor="@color/black"
             android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectAktivitas"
+            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
             app:layout_constraintTop_toBottomOf="@id/garis" />
 
         <TextView
             android:id="@+id/txt_sumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:layout_marginEnd="24sp"
-            android:text="XXXXXXXXXXXX"
+            android:layout_marginTop="25sp"
+            android:layout_marginEnd="16dp"
+            android:text="@{aktivitas.accountNumberOri}"
+            tools:text="XXXXXXXXXXXX"
             android:textColor="@color/black"
-            android:textSize="10dp"
-            app:layout_constraintEnd_toEndOf="@+id/rectAktivitas"
+            android:textSize="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/rectTransfer"
             app:layout_constraintTop_toBottomOf="@id/garis" />
 
         <TextView
@@ -172,17 +187,17 @@
             android:text="Jenis Transaksi"
             android:textColor="@color/black"
             android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectAktivitas"
+            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
             app:layout_constraintTop_toBottomOf="@id/tv_sumber" />
 
         <TextView
             android:id="@+id/txt_jenis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
+            android:layout_marginTop="25sp"
             android:text="Transfer"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_sumber"
             app:layout_constraintTop_toBottomOf="@id/txt_sumber" />
 
@@ -195,19 +210,22 @@
             android:text="Nomor Rekening"
             android:textColor="@color/black"
             android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectAktivitas"
+            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
             app:layout_constraintTop_toBottomOf="@id/tv_jenis" />
 
         <TextView
             android:id="@+id/txt_nomorRekening"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:text="XYXYXYXYXYXY"
+            android:layout_marginTop="25sp"
+            android:layout_marginEnd="16dp"
+            android:text="@{aktivitas.accountNumberDest}"
+            tools:text="XYXYXYXYXYXY"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_jenis"
-            app:layout_constraintTop_toBottomOf="@id/txt_jenis" />
+            app:layout_constraintTop_toBottomOf="@id/txt_jenis"
+            app:layout_constraintEnd_toEndOf="@id/rectTransfer"/>
 
         <TextView
             android:id="@+id/tv_namaPelanggan"
@@ -218,19 +236,22 @@
             android:text="Nama Pelanggan"
             android:textColor="@color/black"
             android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectAktivitas"
+            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
             app:layout_constraintTop_toBottomOf="@id/tv_nomorRekening" />
 
         <TextView
             android:id="@+id/txt_namaPelanggan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:text="Jeje"
+            android:layout_marginTop="25sp"
+            android:layout_marginEnd="16dp"
+            android:text="@{aktivitas.nama}"
+            tools:text="Jeje"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_nomorRekening"
-            app:layout_constraintTop_toBottomOf="@id/txt_nomorRekening" />
+            app:layout_constraintTop_toBottomOf="@id/txt_nomorRekening"
+            app:layout_constraintEnd_toEndOf="@id/rectTransfer"/>
 
         <TextView
             android:id="@+id/tv_ket"
@@ -241,19 +262,22 @@
             android:text="Keterangan"
             android:textColor="@color/black"
             android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectAktivitas"
+            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
             app:layout_constraintTop_toBottomOf="@id/tv_namaPelanggan" />
 
         <TextView
             android:id="@+id/txt_ket"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:text="Bayar Hutang"
+            android:layout_marginTop="25sp"
+            android:layout_marginEnd="16dp"
+            android:text="@{aktivitas.keterangan}"
+            tools:text="Bayar Hutang"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_namaPelanggan"
-            app:layout_constraintTop_toBottomOf="@id/txt_namaPelanggan" />
+            app:layout_constraintTop_toBottomOf="@id/txt_namaPelanggan"
+            app:layout_constraintEnd_toEndOf="@id/rectTransfer"/>
 
         <View
             android:id="@+id/garis2"
@@ -261,8 +285,8 @@
             android:layout_height="2px"
             android:layout_marginTop="20sp"
             android:background="@color/black"
-            app:layout_constraintEnd_toEndOf="@id/rectAktivitas"
-            app:layout_constraintStart_toStartOf="@id/rectAktivitas"
+            app:layout_constraintEnd_toEndOf="@id/rectTransfer"
+            app:layout_constraintStart_toStartOf="@id/rectTransfer"
             app:layout_constraintTop_toBottomOf="@id/tv_ket" />
 
         <TextView
@@ -274,19 +298,22 @@
             android:text="Nominal"
             android:textColor="@color/black"
             android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectAktivitas"
+            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
             app:layout_constraintTop_toBottomOf="@id/garis2" />
 
         <TextView
             android:id="@+id/txt_nominal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:text="Rp.50.000,00"
+            android:layout_marginTop="25sp"
+            android:layout_marginEnd="16dp"
+            android:text="@{`Rp ` + aktivitas.nominal + `,00`}"
+            tools:text="Rp.50.000,00"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_namaPelanggan"
-            app:layout_constraintTop_toBottomOf="@id/garis2" />
+            app:layout_constraintTop_toBottomOf="@id/garis2"
+            app:layout_constraintEnd_toEndOf="@id/rectTransfer"/>
 
         <TextView
             android:id="@+id/tv_biaya"
@@ -297,19 +324,22 @@
             android:text="Biaya Admin"
             android:textColor="@color/black"
             android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectAktivitas"
+            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
             app:layout_constraintTop_toBottomOf="@id/tv_nominal" />
 
         <TextView
             android:id="@+id/txt_biaya"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:text="Rp.1.000,00"
+            android:layout_marginTop="25sp"
+            android:layout_marginEnd="16dp"
+            android:text="@{`Rp ` + aktivitas.biayaAdmin + `,00`}"
+            tools:text="Rp.1.000,00"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_nominal"
-            app:layout_constraintTop_toBottomOf="@id/txt_nominal" />
+            app:layout_constraintTop_toBottomOf="@id/txt_nominal"
+            app:layout_constraintEnd_toEndOf="@id/rectTransfer"/>
 
         <View
             android:id="@+id/garis3"
@@ -317,8 +347,8 @@
             android:layout_height="2px"
             android:layout_marginTop="20sp"
             android:background="@color/black"
-            app:layout_constraintEnd_toEndOf="@id/rectAktivitas"
-            app:layout_constraintStart_toStartOf="@id/rectAktivitas"
+            app:layout_constraintEnd_toEndOf="@id/rectTransfer"
+            app:layout_constraintStart_toStartOf="@id/rectTransfer"
             app:layout_constraintTop_toBottomOf="@id/tv_biaya" />
 
         <TextView
@@ -330,19 +360,22 @@
             android:text="Total"
             android:textColor="@color/black"
             android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectAktivitas"
+            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
             app:layout_constraintTop_toBottomOf="@id/garis3" />
 
         <TextView
             android:id="@+id/txt_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:text="Rp.51.000,00"
+            android:layout_marginTop="25sp"
+            android:layout_marginEnd="16dp"
+            android:text="@{`Rp ` + aktivitas.total + `,00`}"
+            tools:text="Rp.51.000,00"
             android:textColor="@color/black"
-            android:textSize="10dp"
+            android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_biaya"
-            app:layout_constraintTop_toBottomOf="@id/garis3" />
+            app:layout_constraintTop_toBottomOf="@id/garis3"
+            app:layout_constraintEnd_toEndOf="@id/rectTransfer"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

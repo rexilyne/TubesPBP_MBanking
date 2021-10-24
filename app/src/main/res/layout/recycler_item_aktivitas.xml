@@ -65,7 +65,8 @@
                 android:layout_marginStart="12sp"
                 app:layout_constraintStart_toEndOf="@+id/iconTransfer"
                 app:layout_constraintTop_toBottomOf="@id/tv_transaksi"
-                android:text="ABC - XXXXXXXXXX"/>
+                android:text="@{aktivitas.nama + ` - ` + aktivitas.accountNumberDest}"
+                tools:text="ABC - XXXXXXXXXX"/>
             <TextView
                 android:id="@+id/tv_no_referensi"
                 android:layout_width="wrap_content"
@@ -74,7 +75,8 @@
                 android:layout_marginStart="12sp"
                 app:layout_constraintStart_toEndOf="@+id/iconTransfer"
                 app:layout_constraintTop_toBottomOf="@id/tv_keterangan"
-                android:text="No Ref - XXXXXXXXXXXX"
+                android:text="@{`No Ref - ` + aktivitas.noReferensi}"
+                tools:text="No Ref - XXXXXXXXXXXX"
                 />
             <TextView
                 android:id="@+id/tv_tanggal"
@@ -84,7 +86,8 @@
                 android:layout_marginStart="12sp"
                 app:layout_constraintStart_toEndOf="@+id/iconTransfer"
                 app:layout_constraintTop_toBottomOf="@id/tv_no_referensi"
-                android:text="02 Oktober 2021 12.19"/>
+                android:text="@{aktivitas.tanggal}"
+                tools:text="02 Oktober 2021 12.19"/>
 
             <TextView
                 android:id="@+id/tv_status"

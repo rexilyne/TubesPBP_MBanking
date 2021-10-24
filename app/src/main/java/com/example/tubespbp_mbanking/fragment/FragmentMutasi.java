@@ -100,7 +100,7 @@ public class FragmentMutasi extends Fragment {
                 @Override
                 public void userSelectedValue(String value) {
                     if(value.equals("hari_ini")) {
-                        changeFragment(new FragmentMutasi());
+
                     } else if(value.equals("pilih_tanggal_sendiri")) {
                         changeFragment(new FragmentMutasiAlt());
                     }
@@ -114,6 +114,7 @@ public class FragmentMutasi extends Fragment {
         getParentFragmentManager()
                 .beginTransaction()
                 .replace(R.id.layout_app_content,fragment)
+                .addToBackStack("mutasi")
                 .commit();
     }
 

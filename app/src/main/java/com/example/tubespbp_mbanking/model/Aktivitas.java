@@ -8,8 +8,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "aktivitas")
-public class Aktivitas extends BaseObservable {
+public class Aktivitas extends BaseObservable implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -20,7 +22,7 @@ public class Aktivitas extends BaseObservable {
     private String accountNumberDest;
 
     @ColumnInfo(name = "noReferensi")
-    private int noReferensi;
+    private String noReferensi;
 
     @ColumnInfo(name = "nama")
     private String nama;
@@ -47,7 +49,7 @@ public class Aktivitas extends BaseObservable {
 
     @Ignore
     public Aktivitas(int id, String accountNumberOri, String accountNumberDest,
-                     int noReferensi, String nama, String tanggal, int nominal,
+                     String noReferensi, String nama, String tanggal, int nominal,
                      String jenis, String keterangan, int biayaAdmin, int total) {
         this.setId(id);
         this.setAccountNumberOri(accountNumberOri);
@@ -94,11 +96,11 @@ public class Aktivitas extends BaseObservable {
     }
 
     @Bindable
-    public int getNoReferensi() {
+    public String getNoReferensi() {
         return noReferensi;
     }
 
-    public void setNoReferensi(int noReferensi) {
+    public void setNoReferensi(String noReferensi) {
         this.noReferensi = noReferensi;
         notifyPropertyChanged(BR.noReferensi);
     }

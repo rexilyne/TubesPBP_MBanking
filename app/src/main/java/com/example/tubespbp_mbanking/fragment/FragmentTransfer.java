@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.tubespbp_mbanking.R;
+import com.example.tubespbp_mbanking.database.DatabaseAktivitas;
+import com.example.tubespbp_mbanking.database.DatabaseMutasi;
 import com.example.tubespbp_mbanking.database.DatabaseUser;
 import com.example.tubespbp_mbanking.databinding.FragmentHomeBinding;
 import com.example.tubespbp_mbanking.databinding.FragmentTransferBinding;
@@ -23,7 +25,12 @@ import com.example.tubespbp_mbanking.model.Mutasi;
 import com.example.tubespbp_mbanking.model.User;
 import com.example.tubespbp_mbanking.preferences.UserPreferences;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,12 +48,12 @@ public class FragmentTransfer extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private User userLogin;
+    private User userLogin, userPenerima;
     private Aktivitas aktivitas;
-    private Mutasi mutasi;
+    private Mutasi mutasiPengirim, mutasiPenerima;
     private FragmentTransferBinding binding;
     private UserPreferences userPreferences;
-    private List<User> userList;
+    private List<User> userList, userPenerimaList;
 
     public FragmentTransfer() {
         // Required empty public constructor
@@ -98,6 +105,8 @@ public class FragmentTransfer extends Fragment {
 
         userLogin = userPreferences.getUserLogin();
         aktivitas = new Aktivitas();
+        mutasiPengirim = new Mutasi();
+        mutasiPenerima = new Mutasi();
 
         binding.setUser(userLogin);
         binding.setAktivitas(aktivitas);
@@ -123,12 +132,71 @@ public class FragmentTransfer extends Fragment {
                     aktivitas.setKeterangan("");
                 }
 
+                getUserByAccNumber(aktivitas.getAccountNumberDest());
+                if(userPenerimaList.isEmpty()) {
+                    Toast.makeText(getActivity(), "Rekening tujuan tidak ditemukan", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                userPenerima = userPenerimaList.get(0);
+                if(userPenerima.getAccountNumber().equals(userLogin.getAccountNumber())) {
+                    Toast.makeText(getActivity(), "Tidak bisa mengirim ke rekening sendiri", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 PinDialog pinDialog = new PinDialog(getActivity(), userLogin.getPin());
                 pinDialog.setPinDialogListener(new PinDialogListener() {
                     @Override
                     public void pinConfirmed(String pin) {
                         if(userLogin.getPin().equals(pin)) {
-                            Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
+                            //Aktivitas
+                            aktivitas.setAccountNumberOri(userLogin.getAccountNumber());
+                            aktivitas.setNoReferensi(userLogin.getId() + userLogin.getAccountNumber());
+                            aktivitas.setNama(userPenerima.getFirstName() + " " + userPenerima.getLastName());
+                            Date c = Calendar.getInstance().getTime();
+
+                            SimpleDateFormat df = new SimpleDateFormat("dd MMMM yyyy hh:mm", Locale.forLanguageTag("in-ID"));
+                            String formattedDate = df.format(c);
+                            aktivitas.setTanggal(formattedDate);
+                            aktivitas.setJenis("transfer");
+                            aktivitas.setBiayaAdmin(1000);
+                            aktivitas.setTotal(aktivitas.getNominal() + aktivitas.getBiayaAdmin());
+
+                            addAktivitas(aktivitas);
+
+                            //Mutasi Pengirim
+                            mutasiPengirim.setAccountNumber(userLogin.getAccountNumber());
+                            mutasiPengirim.setNama(userLogin.getFirstName() + " " + userLogin.getLastName());
+                            mutasiPengirim.setTanggal(formattedDate);
+                            mutasiPengirim.setNominal(aktivitas.getNominal());
+                            mutasiPengirim.setJenis("transferKeluar");
+
+                            userLogin.setNominal(userLogin.getNominal() - mutasiPengirim.getNominal());
+                            updateUser(userLogin);
+                            userPreferences.setLogin(userLogin);
+
+                            addMutasi(mutasiPengirim);
+
+                            //Mutasi Penerima
+                            mutasiPenerima.setAccountNumber(userPenerima.getAccountNumber());
+                            mutasiPenerima.setNama(userPenerima.getFirstName() + " " + userPenerima.getLastName());
+                            mutasiPenerima.setTanggal(formattedDate);
+                            mutasiPenerima.setNominal(aktivitas.getNominal());
+                            mutasiPenerima.setJenis("transferMasuk");
+
+                            userPenerima.setNominal(userPenerima.getNominal() + mutasiPenerima.getNominal());
+                            updateUser(userPenerima);
+
+                            addMutasi(mutasiPenerima);
+
+                            //Success
+                            Toast.makeText(getActivity(), "Transfer berhasil", Toast.LENGTH_SHORT).show();
+
+                            FragmentDetailTransfer fragmentDetailTransfer = new FragmentDetailTransfer();
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("aktivitas_bundle", aktivitas);
+                            fragmentDetailTransfer.setArguments(bundle);
+
+                            changeFragment(fragmentDetailTransfer);
                         } else {
                             Toast.makeText(getActivity(), "failed", Toast.LENGTH_SHORT).show();
                         }
@@ -165,7 +233,7 @@ public class FragmentTransfer extends Fragment {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                DatabaseUser.getInstance(getActivity().getApplicationContext())
+                DatabaseAktivitas.getInstance(getActivity().getApplicationContext())
                         .getDatabase()
                         .aktivitasDao()
                         .insertAktivitas(aktivitas);
@@ -176,5 +244,61 @@ public class FragmentTransfer extends Fragment {
 
         AddAktivitas addAktivitas = new AddAktivitas(  );
         addAktivitas.execute();
+    }
+
+    private void addMutasi(Mutasi mutasi) {
+        class AddMutasi extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                DatabaseMutasi.getInstance(getActivity().getApplicationContext())
+                        .getDatabase()
+                        .mutasiDao()
+                        .insertMutasi(mutasi);
+
+                return null;
+            }
+        }
+
+        AddMutasi addMutasi = new AddMutasi(  );
+        addMutasi.execute();
+    }
+
+    private void getUserByAccNumber(String search) {
+        userPenerimaList = DatabaseUser.getInstance(getActivity().getApplicationContext())
+                .getDatabase()
+                .userDao()
+                .getUserByAccNumber(search);
+    }
+
+    private void updateUser(User user) {
+        class UpdateUser extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                DatabaseUser.getInstance(getActivity().getApplicationContext())
+                        .getDatabase()
+                        .userDao()
+                        .updateUser(user);
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void unused) {
+                super.onPostExecute(unused);
+//                Toast.makeText(getActivity(), "Berhasil edit user", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        UpdateUser updateUser = new UpdateUser();
+        updateUser.execute();
+    }
+
+    public void changeFragment(Fragment fragment){
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.layout_app_content,fragment)
+                .commit();
     }
 }

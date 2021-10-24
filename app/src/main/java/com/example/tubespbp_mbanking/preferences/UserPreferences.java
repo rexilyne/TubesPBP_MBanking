@@ -10,7 +10,6 @@ public class UserPreferences {
     SharedPreferences.Editor editor;
     Context context;
 
-
     public static final String IS_LOGIN = "isLogin";
     public static final String KEY_ID = "id";
     public static final String KEY_FIRSTNAME = "firstName";

@@ -2,6 +2,8 @@ package com.example.tubespbp_mbanking.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,6 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tubespbp_mbanking.R;
+import com.example.tubespbp_mbanking.databinding.FragmentDetailTransferBinding;
+import com.example.tubespbp_mbanking.databinding.FragmentHomeBinding;
+import com.example.tubespbp_mbanking.model.Aktivitas;
+import com.example.tubespbp_mbanking.model.User;
+import com.example.tubespbp_mbanking.preferences.UserPreferences;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +34,11 @@ public class FragmentDetailTransfer extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private User userLogin;
+    private FragmentDetailTransferBinding binding;
+    private UserPreferences userPreferences;
+    private List<User> userList;
 
     public FragmentDetailTransfer() {
         // Required empty public constructor
@@ -61,6 +75,24 @@ public class FragmentDetailTransfer extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_transfer, container, false);
+        binding = FragmentDetailTransferBinding.inflate(inflater, container, false);
+        binding.setFragment(this);
+        View view = binding.getRoot();
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Bundle bundle = getArguments();
+        Aktivitas aktivitas = (Aktivitas)bundle.getSerializable("aktivitas_bundle");
+
+        userPreferences = new UserPreferences(getActivity());
+
+        userLogin = userPreferences.getUserLogin();
+        binding.setUser(userLogin);
+        binding.setAktivitas(aktivitas);
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,5 +89,11 @@ public class FragmentMutasiAlt extends Fragment {
         userPreferences = new UserPreferences(getActivity());
 
         userLogin = userPreferences.getUserLogin();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getParentFragmentManager().popBackStack("mutasi", FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 }

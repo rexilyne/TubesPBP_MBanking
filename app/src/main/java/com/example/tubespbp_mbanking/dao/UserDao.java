@@ -15,6 +15,9 @@ public interface UserDao {
     @Query("SELECT * FROM user WHERE email = :search")
     List<User> getUserByEmail(String search);
 
+    @Query("SELECT * FROM user WHERE accountNumber = :search")
+    List<User> getUserByAccNumber(String search);
+
     @Insert
     void insertUser(User user);
 
