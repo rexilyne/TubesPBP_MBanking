@@ -110,6 +110,7 @@
             app:layout_constraintTop_toBottomOf="@id/txt_hari"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{fragment.btnCari}"
             />
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

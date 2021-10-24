@@ -1,5 +1,6 @@
 package com.example.tubespbp_mbanking.fragment;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 import com.example.tubespbp_mbanking.R;
 import com.example.tubespbp_mbanking.databinding.FragmentMutasiAltBinding;
@@ -17,6 +19,7 @@ import com.example.tubespbp_mbanking.databinding.FragmentMutasiBinding;
 import com.example.tubespbp_mbanking.model.User;
 import com.example.tubespbp_mbanking.preferences.UserPreferences;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -96,4 +99,29 @@ public class FragmentMutasiAlt extends Fragment {
         super.onDestroy();
         getParentFragmentManager().popBackStack("mutasi", FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
+
+    public View.OnClickListener btnCari = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
+
+    public View.OnClickListener btnTanggalMasuk = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+//            Calendar newCalendar = Calendar.getInstance();
+//            datePickerDialog = new DatePickerDialog(InputDataPegawai.this, new DatePickerDialog.OnDateSetListener() {
+//                @Override
+//                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                    Calendar newDate = Calendar.getInstance();
+//                    newDate.set(year, monthOfYear, dayOfMonth);
+//
+//                    pgwi.setTanggal_masuk(dateFormatter.format(newDate.getTime()));
+//                }
+//            }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+//
+//            datePickerDialog.show();
+        }
+    };
 }

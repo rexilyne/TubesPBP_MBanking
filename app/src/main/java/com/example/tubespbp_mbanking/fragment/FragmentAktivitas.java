@@ -98,7 +98,6 @@ public class FragmentAktivitas extends Fragment {
 
         aktivitasList = new ArrayList<>();
         getAktivitasByAccNumber(userLogin.getAccountNumber());
-        Toast.makeText(this.getContext(), aktivitasList.get(0).getAccountNumberOri(), Toast.LENGTH_SHORT).show();
 
         aktivitasAdapter = new AktivitasAdapter(aktivitasList, getActivity());
 

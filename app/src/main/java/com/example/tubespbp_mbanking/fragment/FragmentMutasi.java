@@ -110,6 +110,13 @@ public class FragmentMutasi extends Fragment {
         }
     };
 
+    public View.OnClickListener btnCari = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
+
     public void changeFragment(Fragment fragment){
         getParentFragmentManager()
                 .beginTransaction()
