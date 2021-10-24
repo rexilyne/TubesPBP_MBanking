@@ -112,7 +112,7 @@ public class FragmentLogin extends Fragment {
             if(validateForm()) {
                 getUserByEmail(userLogin.getEmail());
                 if(userList.isEmpty()) {
-                    Toast.makeText(getActivity(), "Username tidak ditemukan", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Email tidak ditemukan", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (userLogin.getEmail().trim().equals(userList.get(0).getEmail())
@@ -120,7 +120,7 @@ public class FragmentLogin extends Fragment {
                     userPreferences.setLogin(userList.get(0));
                     checkLogin();
                 } else {
-                    Toast.makeText(getActivity(), "Username atau Password salah", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Email atau Password salah", Toast.LENGTH_SHORT).show();
                 }
             }
         }

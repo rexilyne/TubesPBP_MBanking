@@ -71,7 +71,7 @@
             android:layout_marginTop="8dp"
             android:text="@{user.accountNumber}"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/rectHome"
             app:layout_constraintTop_toBottomOf="@id/txt_nama"
             tools:text="0324 4321 4444 3579"/>
@@ -84,7 +84,7 @@
             android:layout_marginTop="8dp"
             android:text="@{`Rp ` + String.valueOf(user.nominal) + `,-`}"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/rectHome"
             app:layout_constraintTop_toBottomOf="@id/txt_account_number"
             tools:text="Rp XXX.XXX.XXX,-"/>

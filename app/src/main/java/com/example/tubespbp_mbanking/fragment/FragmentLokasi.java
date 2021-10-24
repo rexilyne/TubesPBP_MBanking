@@ -7,25 +7,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.tubespbp_mbanking.R;
-import com.example.tubespbp_mbanking.activity.MainActivity;
 import com.example.tubespbp_mbanking.databinding.FragmentLokasiBinding;
 import com.example.tubespbp_mbanking.model.User;
 import com.example.tubespbp_mbanking.preferences.UserPreferences;
 import com.mapbox.android.core.location.LocationEngine;
-import com.mapbox.android.core.location.LocationEngineProvider;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.Marker;
-import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
@@ -36,6 +36,12 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.plugins.annotation.OnSymbolDragListener;
+import com.mapbox.mapboxsdk.plugins.annotation.OnSymbolLongClickListener;
+import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
+import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
+import com.mapbox.mapboxsdk.plugins.annotation.Symbol;
+import com.mapbox.mapboxsdk.plugins.annotation.OnSymbolClickListener;
 
 
 import java.util.List;
@@ -71,6 +77,12 @@ public class FragmentLokasi extends Fragment implements OnMapReadyCallback, Perm
     private Point destinationPosition;
     private Marker destinationMarker;
     private Button startButton;
+    private static final String MAKI_ICON_CAFE = "cafe-15";
+    private static final String MAKI_ICON_HARBOR = "harbor-15";
+    private static final String MAKI_ICON_AIRPORT = "airport-15";
+    private static final String MAKI_ICON_BANK = "bank-15";
+    private SymbolManager symbolManager;
+    private Symbol symbol1, symbol2, symbol3;
 
     private static final String TAG = "FragmentLokasi";
 
@@ -128,6 +140,36 @@ public class FragmentLokasi extends Fragment implements OnMapReadyCallback, Perm
         mapView = binding.mapView;
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
+        EditText etAlamat = binding.etAlamat.getEditText();
+        etAlamat.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if("JL. Rambutan No.111".toLowerCase().contains(etAlamat.getText().toString())) {
+                    setInfoAtm("ATM Cabang Rambutan",
+                            "JL. Rambutan No.111",
+                            "10.0 KM");
+                } else if("JL. Jambu No.456".toLowerCase().contains(etAlamat.getText().toString())) {
+                    setInfoAtm("ATM Cabang Jambu",
+                            "JL. Jambu No.456",
+                            "5.0 KM");
+                } else if("JL. Apel No.123".toLowerCase().contains(etAlamat.getText().toString())) {
+                    setInfoAtm("ATM Cabang Apel",
+                            "JL. Apel No.123",
+                            "4.0 KM");
+                }
+            }
+        });
     }
 
     @Override
@@ -152,10 +194,95 @@ public class FragmentLokasi extends Fragment implements OnMapReadyCallback, Perm
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
+
         mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
                 enableLocationComponent(style);
+
+                // Set up a SymbolManager instance
+                symbolManager = new SymbolManager(mapView, mapboxMap, style);
+
+                symbolManager.setIconAllowOverlap(true);
+                symbolManager.setTextAllowOverlap(true);
+
+// Add symbol at specified lat/lon
+                //Mountain View
+                symbol1 = symbolManager.create(new SymbolOptions()
+                        .withLatLng(new LatLng(37.352147, -122.041437))
+                        .withIconImage(MAKI_ICON_BANK)
+                        .withIconSize(2.0f)
+                        .withDraggable(false));
+
+                symbol2 = symbolManager.create(new SymbolOptions()
+                        .withLatLng(new LatLng(37.382434, -122.064757))
+                        .withIconImage(MAKI_ICON_BANK)
+                        .withIconSize(2.0f)
+                        .withDraggable(false));
+
+                symbol3 = symbolManager.create(new SymbolOptions()
+                        .withLatLng(new LatLng(37.409710, -122.040066))
+                        .withIconImage(MAKI_ICON_BANK)
+                        .withIconSize(2.0f)
+                        .withDraggable(false));
+
+                //Jogja
+//                symbol1 = symbolManager.create(new SymbolOptions()
+//                        .withLatLng(new LatLng(-7.766118, 110.378641))
+//                        .withIconImage(MAKI_ICON_BANK)
+//                        .withIconSize(2.0f)
+//                        .withDraggable(false));
+//
+//                symbol2 = symbolManager.create(new SymbolOptions()
+//                        .withLatLng(new LatLng(-7.782970, 110.404187))
+//                        .withIconImage(MAKI_ICON_BANK)
+//                        .withIconSize(2.0f)
+//                        .withDraggable(false));
+//
+//                symbol3 = symbolManager.create(new SymbolOptions()
+//                        .withLatLng(new LatLng(-7.777768, 110.415547))
+//                        .withIconImage(MAKI_ICON_BANK)
+//                        .withIconSize(2.0f)
+//                        .withDraggable(false));
+
+// Add click listener and change the symbol to a cafe icon on click
+                symbolManager.addClickListener(new OnSymbolClickListener() {
+                    @Override
+                    public boolean onAnnotationClick(Symbol symbol) {
+                        if(symbol == symbol1) {
+                            setInfoAtm("ATM Cabang Rambutan",
+                                    "JL. Rambutan No.111",
+                                    "10.0 KM");
+                        } else if(symbol == symbol2) {
+                            setInfoAtm("ATM Cabang Jambu",
+                                    "JL. Jambu No.456",
+                                    "5.0 KM");
+                        } else if(symbol == symbol3) {
+                            setInfoAtm("ATM Cabang Apel",
+                                    "JL. Apel No.123",
+                                    "4.0 KM");
+                        }
+//                        symbol.setIconImage(MAKI_ICON_CAFE);
+//                        symbolManager.update(symbol);
+                        return false;
+                    }
+                });
+
+// Add long click listener and change the symbol to an airport icon on long click
+                symbolManager.addLongClickListener((new OnSymbolLongClickListener() {
+                    @Override
+                    public boolean onAnnotationLongClick(Symbol symbol) {
+//                        Toast.makeText(FragmentLokasi.this.getContext(),
+//                                "annotation long click", Toast.LENGTH_SHORT).show();
+//                        symbol.setIconImage(MAKI_ICON_AIRPORT);
+//                        symbolManager.update(symbol);
+                        return false;
+                    }
+                }));
+
+
+//                Toast.makeText(FragmentLokasi.this.getContext(),
+//                        "instruction", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -242,6 +369,12 @@ public class FragmentLokasi extends Fragment implements OnMapReadyCallback, Perm
             permissionsManager = new PermissionsManager(this);
             permissionsManager.requestLocationPermissions(getActivity());
         }
+    }
+
+    private void setInfoAtm(String namaAtm, String alamat, String jarak) {
+        binding.txtCabang.setText(namaAtm);
+        binding.txtAlamat.setText(alamat);
+        binding.txtJarak.setText(jarak);
     }
 
 

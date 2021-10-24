@@ -57,8 +57,10 @@ dependencies {
 
     //Mapbox
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.2.1'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v9:0.9.0'
 
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
     implementation platform('com.google.firebase:firebase-bom:28.2.0')
     implementation 'com.google.firebase:firebase-analytics'
+
 }
