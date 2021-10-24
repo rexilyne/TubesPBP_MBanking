@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 
 import com.example.tubespbp_mbanking.R;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class SplashActivity extends AppCompatActivity {
     private final int SPLASH_DISPLAY_LENGTH = 2000;
@@ -15,6 +16,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+        FirebaseMessaging.getInstance().subscribeToTopic("tubesPBP");
         setContentView(R.layout.activity_splash);
         getSupportActionBar().hide();
 

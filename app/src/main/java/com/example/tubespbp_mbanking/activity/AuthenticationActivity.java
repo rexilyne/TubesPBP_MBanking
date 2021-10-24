@@ -9,12 +9,14 @@ import android.os.Bundle;
 
 import com.example.tubespbp_mbanking.R;
 import com.example.tubespbp_mbanking.fragment.FragmentLogin;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class AuthenticationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseMessaging.getInstance().subscribeToTopic("tubesPBP");
         setContentView(R.layout.activity_authentication);
 
         getSupportActionBar().hide();

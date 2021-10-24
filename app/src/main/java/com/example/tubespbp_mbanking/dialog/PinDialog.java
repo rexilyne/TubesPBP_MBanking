@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -168,6 +169,66 @@ public class PinDialog extends Dialog{
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+
+        digit2.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(i == KeyEvent.KEYCODE_DEL) {
+                    if(digit2.getText().toString().isEmpty()) {
+                        digit1.requestFocus();
+                    }
+                }
+                return false;
+            }
+        });
+
+        digit3.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(i == KeyEvent.KEYCODE_DEL) {
+                    if(digit3.getText().toString().isEmpty()) {
+                        digit2.requestFocus();
+                    }
+                }
+                return false;
+            }
+        });
+
+        digit4.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(i == KeyEvent.KEYCODE_DEL) {
+                    if(digit4.getText().toString().isEmpty()) {
+                        digit3.requestFocus();
+                    }
+                }
+                return false;
+            }
+        });
+
+        digit5.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(i == KeyEvent.KEYCODE_DEL) {
+                    if(digit5.getText().toString().isEmpty()) {
+                        digit4.requestFocus();
+                    }
+                }
+                return false;
+            }
+        });
+
+        digit6.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(i == KeyEvent.KEYCODE_DEL) {
+                    if(digit6.getText().toString().isEmpty()) {
+                        digit5.requestFocus();
+                    }
+                }
+                return false;
             }
         });
     }

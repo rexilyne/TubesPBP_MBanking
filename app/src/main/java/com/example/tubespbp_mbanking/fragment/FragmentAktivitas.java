@@ -2,13 +2,26 @@ package com.example.tubespbp_mbanking.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tubespbp_mbanking.R;
+import com.example.tubespbp_mbanking.adapter.AktivitasAdapter;
+import com.example.tubespbp_mbanking.database.DatabaseAktivitas;
+import com.example.tubespbp_mbanking.databinding.FragmentAktivitasBinding;
+import com.example.tubespbp_mbanking.model.Aktivitas;
+import com.example.tubespbp_mbanking.model.User;
+import com.example.tubespbp_mbanking.preferences.UserPreferences;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +38,14 @@ public class FragmentAktivitas extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private User userLogin;
+    private FragmentAktivitasBinding binding;
+    private UserPreferences userPreferences;
+    private List<User> userList;
+    private RecyclerView recyclerView;
+    private AktivitasAdapter aktivitasAdapter;
+    private List<Aktivitas> aktivitasList;
 
     public FragmentAktivitas() {
         // Required empty public constructor
@@ -61,6 +82,33 @@ public class FragmentAktivitas extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_aktivitas, container, false);
+        binding = FragmentAktivitasBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        userPreferences = new UserPreferences(getActivity());
+        userLogin = userPreferences.getUserLogin();
+
+        aktivitasList = new ArrayList<>();
+        getAktivitasByAccNumber(userLogin.getAccountNumber());
+
+        aktivitasAdapter = new AktivitasAdapter(aktivitasList);
+
+        recyclerView = binding.rvAktivitas;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(aktivitasAdapter);
+    }
+
+    private void getAktivitasByAccNumber(String search) {
+        aktivitasList = DatabaseAktivitas.getInstance(getActivity().getApplicationContext())
+                .getDatabase()
+                .aktivitasDao()
+                .getAktivitasByAccNumber(search);
     }
 }

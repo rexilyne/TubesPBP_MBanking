@@ -2,6 +2,8 @@ package com.example.tubespbp_mbanking.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,6 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tubespbp_mbanking.R;
+import com.example.tubespbp_mbanking.databinding.FragmentMutasiBinding;
+import com.example.tubespbp_mbanking.dialog.BottomMutasiDialog;
+import com.example.tubespbp_mbanking.dialog.BottomMutasiDialogListener;
+import com.example.tubespbp_mbanking.model.User;
+import com.example.tubespbp_mbanking.preferences.UserPreferences;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +35,11 @@ public class FragmentMutasi extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private User userLogin;
+    private FragmentMutasiBinding binding;
+    private UserPreferences userPreferences;
+    private List<User> userList;
 
     public FragmentMutasi() {
         // Required empty public constructor
@@ -61,6 +76,45 @@ public class FragmentMutasi extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mutasi, container, false);
+        binding = FragmentMutasiBinding.inflate(inflater, container, false);
+        binding.setFragment(this);
+        View view = binding.getRoot();
+
+        return view;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        userPreferences = new UserPreferences(getActivity());
+
+        userLogin = userPreferences.getUserLogin();
+    }
+
+    public View.OnClickListener btnPilihTanggal = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            BottomMutasiDialog bottomMutasiDialog = new BottomMutasiDialog(getActivity());
+            bottomMutasiDialog.setBottomMutasiDialogListener(new BottomMutasiDialogListener() {
+                @Override
+                public void userSelectedValue(String value) {
+                    if(value.equals("hari_ini")) {
+                        changeFragment(new FragmentMutasi());
+                    } else if(value.equals("pilih_tanggal_sendiri")) {
+                        changeFragment(new FragmentMutasiAlt());
+                    }
+                }
+            });
+            bottomMutasiDialog.show();
+        }
+    };
+
+    public void changeFragment(Fragment fragment){
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.layout_app_content,fragment)
+                .commit();
+    }
+
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="dialog"
+            type="com.example.tubespbp_mbanking.dialog.BottomMutasiDialog" />
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/hari_ini"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="8dp"
+            android:onClick="@{dialog.btnHariIni}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hari ini"
+                android:layout_gravity="center_vertical"
+                android:padding="8dp"
+                android:onClick="@{dialog.btnHariIni}"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/pilih_tanggal_sendiri"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="8dp"
+            android:onClick="@{dialog.btnPilihTanggalSendiri}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pilih tanggal sendiri"
+                android:layout_gravity="center_vertical"
+                android:padding="8dp"
+                android:onClick="@{dialog.btnPilihTanggalSendiri}"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

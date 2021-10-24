@@ -14,28 +14,29 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.tubespbp_mbanking.R;
+import com.example.tubespbp_mbanking.activity.MainActivity;
 import com.example.tubespbp_mbanking.databinding.FragmentLokasiBinding;
 import com.example.tubespbp_mbanking.model.User;
 import com.example.tubespbp_mbanking.preferences.UserPreferences;
 import com.mapbox.android.core.location.LocationEngine;
-import com.mapbox.android.core.location.LocationEngineListener;
-import com.mapbox.android.core.location.LocationEnginePriority;
 import com.mapbox.android.core.location.LocationEngineProvider;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
-import com.mapbox.api.directions.v5.models.DirectionsRoute;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.mapbox.mapboxsdk.location.LocationComponent;
+import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
+import com.mapbox.mapboxsdk.location.LocationComponentOptions;
+import com.mapbox.mapboxsdk.location.modes.CameraMode;
+import com.mapbox.mapboxsdk.location.modes.RenderMode;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
-import com.mapbox.mapboxsdk.plugins.locationlayer.LocationLayerPlugin;
-import com.mapbox.mapboxsdk.plugins.locationlayer.modes.CameraMode;
-import com.mapbox.mapboxsdk.plugins.locationlayer.modes.RenderMode;
-import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
+import com.mapbox.mapboxsdk.maps.Style;
+
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ import java.util.List;
  * Use the {@link FragmentLokasi#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentLokasi extends Fragment implements OnMapReadyCallback, PermissionsListener, LocationEngineListener {
+public class FragmentLokasi extends Fragment implements OnMapReadyCallback, PermissionsListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -65,14 +66,11 @@ public class FragmentLokasi extends Fragment implements OnMapReadyCallback, Perm
     private MapboxMap mapboxMap;
     private MapView mapView;
     private LocationEngine locationEngine;
-    private LocationLayerPlugin locationLayerPlugin;
     private Location originLocation;
     private Point originPosition;
     private Point destinationPosition;
     private Marker destinationMarker;
     private Button startButton;
-    private NavigationMapRoute navigationMapRoute;
-    private DirectionsRoute currentRoute;
 
     private static final String TAG = "FragmentLokasi";
 
@@ -111,6 +109,7 @@ public class FragmentLokasi extends Fragment implements OnMapReadyCallback, Perm
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Mapbox.getInstance(getActivity(), getString(R.string.mapbox_access_token));
         binding = FragmentLokasiBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         View view = binding.getRoot();
@@ -126,8 +125,6 @@ public class FragmentLokasi extends Fragment implements OnMapReadyCallback, Perm
 
         userLogin = userPreferences.getUserLogin();
 
-        Mapbox.getInstance(getActivity(), getString(R.string.mapbox_access_token));
-
         mapView = binding.mapView;
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -141,17 +138,27 @@ public class FragmentLokasi extends Fragment implements OnMapReadyCallback, Perm
     @Override
     public void onPermissionResult(boolean granted) {
         if (granted) {
-            enableLocation();
+            mapboxMap.getStyle(new Style.OnStyleLoaded() {
+                @Override
+                public void onStyleLoaded(@NonNull Style style) {
+                    enableLocationComponent(style);
+                }
+            });
         } else {
-            Toast.makeText(getActivity(), R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getContext(), R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
         }
-
     }
 
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
-        enableLocation();
+        mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+            @Override
+            public void onStyleLoaded(@NonNull Style style) {
+                enableLocationComponent(style);
+            }
+        });
+
     }
 
     @Override
@@ -164,12 +171,6 @@ public class FragmentLokasi extends Fragment implements OnMapReadyCallback, Perm
     @SuppressWarnings( {"MissingPermission"})
     public void onStart() {
         super.onStart();
-        if(locationEngine != null) {
-            locationEngine.removeLocationUpdates();
-        }
-        if(locationLayerPlugin != null) {
-            locationLayerPlugin.onStart();
-        }
         mapView.onStart();
     }
 
@@ -188,12 +189,6 @@ public class FragmentLokasi extends Fragment implements OnMapReadyCallback, Perm
     @Override
     public void onStop() {
         super.onStop();
-        if(locationEngine != null) {
-            locationEngine.removeLocationUpdates();
-        }
-        if(locationLayerPlugin != null) {
-            locationLayerPlugin.onStop();
-        }
         mapView.onStop();
     }
 
@@ -206,9 +201,6 @@ public class FragmentLokasi extends Fragment implements OnMapReadyCallback, Perm
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(locationEngine != null) {
-            locationEngine.deactivate();
-        }
         mapView.onDestroy();
     }
 
@@ -218,55 +210,39 @@ public class FragmentLokasi extends Fragment implements OnMapReadyCallback, Perm
         mapView.onLowMemory();
     }
 
-    @Override
-    @SuppressWarnings("MissingPermission")
-    public void onConnected() {
-        locationEngine.requestLocationUpdates();
-    }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        if(location != null) {
-            originLocation = location;
-            setCameraPosition(location);
-        }
-    }
+    @SuppressWarnings( {"MissingPermission"})
+    private void enableLocationComponent(@NonNull Style loadedMapStyle) {
 
-    private void enableLocation() {
-        if(PermissionsManager.areLocationPermissionsGranted(getActivity())) {
-            initializeLocationEngine();
-            initializeLocationLayer();
+        if (PermissionsManager.areLocationPermissionsGranted(this.getContext())) {
+
+
+            LocationComponentOptions customLocationComponentOptions = LocationComponentOptions.builder(this.getContext())
+                    .pulseEnabled(true)
+                    .build();
+
+
+            LocationComponent locationComponent = mapboxMap.getLocationComponent();
+
+
+            locationComponent.activateLocationComponent(
+                    LocationComponentActivationOptions.builder(this.getContext(), loadedMapStyle)
+                            .locationComponentOptions(customLocationComponentOptions)
+                            .build());
+
+
+            locationComponent.setLocationComponentEnabled(true);
+
+
+            locationComponent.setCameraMode(CameraMode.TRACKING);
+
+
+            locationComponent.setRenderMode(RenderMode.NORMAL);
         } else {
             permissionsManager = new PermissionsManager(this);
             permissionsManager.requestLocationPermissions(getActivity());
         }
     }
 
-    @SuppressWarnings("MissingPermission")
-    private void initializeLocationEngine() {
-        locationEngine = new LocationEngineProvider(getActivity()).obtainBestLocationEngineAvailable();
-        locationEngine.setPriority(LocationEnginePriority.HIGH_ACCURACY);
-        locationEngine.activate();
 
-        Location lastLocation = locationEngine.getLastLocation();
-        if(lastLocation != null) {
-            originLocation = lastLocation;
-            setCameraPosition(lastLocation);
-        } else {
-            locationEngine.addLocationEngineListener(this);
-        }
-    }
-
-    @SuppressWarnings("MissingPermission")
-    private void initializeLocationLayer() {
-        locationLayerPlugin = new LocationLayerPlugin(mapView, mapboxMap, locationEngine);
-        locationLayerPlugin.setLocationLayerEnabled(true);
-        locationLayerPlugin.setCameraMode(CameraMode.TRACKING);
-        locationLayerPlugin.setRenderMode(RenderMode.NORMAL);
-    }
-
-    private void setCameraPosition(Location location) {
-        mapboxMap.animateCamera(CameraUpdateFactory
-                .newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13.0));
-    }
 }

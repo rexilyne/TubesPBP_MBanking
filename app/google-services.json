@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "529590191944",
+    "project_id": "tubespbp-mbanking",
+    "storage_bucket": "tubespbp-mbanking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:529590191944:android:d72f0bbbc92cd27d37157d",
+        "android_client_info": {
+          "package_name": "com.example.tubespbp_mbanking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "529590191944-8gvr3uhl92ft8kkmubmvbdfq5422tqqu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWvftf6ueCYoAN85IazctshTesH9JLCPA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "529590191944-8gvr3uhl92ft8kkmubmvbdfq5422tqqu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

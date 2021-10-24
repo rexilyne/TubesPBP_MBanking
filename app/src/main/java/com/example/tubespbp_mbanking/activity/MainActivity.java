@@ -20,6 +20,7 @@ import com.example.tubespbp_mbanking.fragment.FragmentHome;
 import com.example.tubespbp_mbanking.fragment.FragmentMutasi;
 import com.example.tubespbp_mbanking.fragment.FragmentTransfer;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseMessaging.getInstance().subscribeToTopic("tubesPBP");
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setActivity(this);
         binding.bottomNavigation.setOnNavigationItemSelectedListener(

@@ -1,5 +1,6 @@
 package com.example.tubespbp_mbanking.fragment;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,11 +13,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.tubespbp_mbanking.R;
+import com.example.tubespbp_mbanking.database.DatabaseUser;
 import com.example.tubespbp_mbanking.databinding.FragmentHomeBinding;
 import com.example.tubespbp_mbanking.databinding.FragmentTransferBinding;
 import com.example.tubespbp_mbanking.dialog.PinDialog;
 import com.example.tubespbp_mbanking.dialog.PinDialogListener;
 import com.example.tubespbp_mbanking.model.Aktivitas;
+import com.example.tubespbp_mbanking.model.Mutasi;
 import com.example.tubespbp_mbanking.model.User;
 import com.example.tubespbp_mbanking.preferences.UserPreferences;
 
@@ -40,6 +43,7 @@ public class FragmentTransfer extends Fragment {
 
     private User userLogin;
     private Aktivitas aktivitas;
+    private Mutasi mutasi;
     private FragmentTransferBinding binding;
     private UserPreferences userPreferences;
     private List<User> userList;
@@ -154,5 +158,23 @@ public class FragmentTransfer extends Fragment {
             return false;
         }
         return true;
+    }
+
+    private void addAktivitas(Aktivitas aktivitas) {
+        class AddAktivitas extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                DatabaseUser.getInstance(getActivity().getApplicationContext())
+                        .getDatabase()
+                        .aktivitasDao()
+                        .insertAktivitas(aktivitas);
+
+                return null;
+            }
+        }
+
+        AddAktivitas addAktivitas = new AddAktivitas(  );
+        addAktivitas.execute();
     }
 }
