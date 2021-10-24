@@ -5,20 +5,34 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.tubespbp_mbanking.R;
+import com.example.tubespbp_mbanking.adapter.AktivitasAdapter;
+import com.example.tubespbp_mbanking.adapter.MutasiAdapter;
+import com.example.tubespbp_mbanking.database.DatabaseAktivitas;
+import com.example.tubespbp_mbanking.database.DatabaseMutasi;
 import com.example.tubespbp_mbanking.databinding.FragmentMutasiBinding;
 import com.example.tubespbp_mbanking.dialog.BottomMutasiDialog;
 import com.example.tubespbp_mbanking.dialog.BottomMutasiDialogListener;
+import com.example.tubespbp_mbanking.model.Mutasi;
 import com.example.tubespbp_mbanking.model.User;
 import com.example.tubespbp_mbanking.preferences.UserPreferences;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +54,10 @@ public class FragmentMutasi extends Fragment {
     private FragmentMutasiBinding binding;
     private UserPreferences userPreferences;
     private List<User> userList;
+    private RecyclerView recyclerView;
+    private MutasiAdapter mutasiAdapter;
+    private List<Mutasi> mutasiList, filteredList;
+    private Mutasi checkMutasiDate;
 
     public FragmentMutasi() {
         // Required empty public constructor
@@ -113,7 +131,33 @@ public class FragmentMutasi extends Fragment {
     public View.OnClickListener btnCari = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            mutasiList = new ArrayList<>();
+            filteredList = new ArrayList<>();
+            Date dateObj = new Date();
+            getMutasiByAccNumber(userLogin.getAccountNumber());
+            SimpleDateFormat df = new SimpleDateFormat("dd MMMM yyyy hh:mm", Locale.forLanguageTag("in-ID"));
 
+            for (int i = 0; i < mutasiList.size(); i++) {
+                checkMutasiDate = mutasiList.get(i);
+                try {
+                    dateObj = df.parse(checkMutasiDate.getTanggal());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(DateUtils.isToday(dateObj.getTime())) {
+                    filteredList.add(checkMutasiDate);
+                }
+            }
+
+            if(filteredList.isEmpty()) {
+                Toast.makeText(FragmentMutasi.this.getContext(), "Tidak ada mutasi", Toast.LENGTH_SHORT).show();
+            }
+
+            mutasiAdapter = new MutasiAdapter(filteredList);
+
+            recyclerView = binding.rvMutasi;
+            recyclerView.setLayoutManager(new LinearLayoutManager(FragmentMutasi.this.getContext()));
+            recyclerView.setAdapter(mutasiAdapter);
         }
     };
 
@@ -123,6 +167,13 @@ public class FragmentMutasi extends Fragment {
                 .replace(R.id.layout_app_content,fragment)
                 .addToBackStack("mutasi")
                 .commit();
+    }
+
+    private void getMutasiByAccNumber(String search) {
+        mutasiList = DatabaseMutasi.getInstance(getActivity().getApplicationContext())
+                .getDatabase()
+                .mutasiDao()
+                .getMutasiByAccNumber(search);
     }
 
 }

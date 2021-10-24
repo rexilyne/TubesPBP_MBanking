@@ -157,7 +157,7 @@ public class FragmentTransfer extends Fragment {
                             SimpleDateFormat df = new SimpleDateFormat("dd MMMM yyyy hh:mm", Locale.forLanguageTag("in-ID"));
                             String formattedDate = df.format(c);
                             aktivitas.setTanggal(formattedDate);
-                            aktivitas.setJenis("transfer");
+                            aktivitas.setJenis("Transfer");
                             aktivitas.setBiayaAdmin(1000);
                             aktivitas.setTotal(aktivitas.getNominal() + aktivitas.getBiayaAdmin());
 
@@ -168,7 +168,7 @@ public class FragmentTransfer extends Fragment {
                             mutasiPengirim.setNama(userLogin.getFirstName() + " " + userLogin.getLastName());
                             mutasiPengirim.setTanggal(formattedDate);
                             mutasiPengirim.setNominal(aktivitas.getNominal());
-                            mutasiPengirim.setJenis("transferKeluar");
+                            mutasiPengirim.setJenis("Transfer Keluar");
 
                             userLogin.setNominal(userLogin.getNominal() - mutasiPengirim.getNominal());
                             updateUser(userLogin);
@@ -181,7 +181,7 @@ public class FragmentTransfer extends Fragment {
                             mutasiPenerima.setNama(userPenerima.getFirstName() + " " + userPenerima.getLastName());
                             mutasiPenerima.setTanggal(formattedDate);
                             mutasiPenerima.setNominal(aktivitas.getNominal());
-                            mutasiPenerima.setJenis("transferMasuk");
+                            mutasiPenerima.setJenis("Transfer Masuk");
 
                             userPenerima.setNominal(userPenerima.getNominal() + mutasiPenerima.getNominal());
                             updateUser(userPenerima);

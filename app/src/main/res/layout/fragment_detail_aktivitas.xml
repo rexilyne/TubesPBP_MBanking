@@ -224,8 +224,7 @@
             android:textColor="@color/black"
             android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_jenis"
-            app:layout_constraintTop_toBottomOf="@id/txt_jenis"
-            app:layout_constraintEnd_toEndOf="@id/rectTransfer"/>
+            app:layout_constraintTop_toBottomOf="@id/txt_jenis" />
 
         <TextView
             android:id="@+id/tv_namaPelanggan"
@@ -250,8 +249,7 @@
             android:textColor="@color/black"
             android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_nomorRekening"
-            app:layout_constraintTop_toBottomOf="@id/txt_nomorRekening"
-            app:layout_constraintEnd_toEndOf="@id/rectTransfer"/>
+            app:layout_constraintTop_toBottomOf="@id/txt_nomorRekening" />
 
         <TextView
             android:id="@+id/tv_ket"
@@ -276,8 +274,7 @@
             android:textColor="@color/black"
             android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_namaPelanggan"
-            app:layout_constraintTop_toBottomOf="@id/txt_namaPelanggan"
-            app:layout_constraintEnd_toEndOf="@id/rectTransfer"/>
+            app:layout_constraintTop_toBottomOf="@id/txt_namaPelanggan" />
 
         <View
             android:id="@+id/garis2"
@@ -312,8 +309,7 @@
             android:textColor="@color/black"
             android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_namaPelanggan"
-            app:layout_constraintTop_toBottomOf="@id/garis2"
-            app:layout_constraintEnd_toEndOf="@id/rectTransfer"/>
+            app:layout_constraintTop_toBottomOf="@id/garis2" />
 
         <TextView
             android:id="@+id/tv_biaya"
@@ -338,8 +334,7 @@
             android:textColor="@color/black"
             android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_nominal"
-            app:layout_constraintTop_toBottomOf="@id/txt_nominal"
-            app:layout_constraintEnd_toEndOf="@id/rectTransfer"/>
+            app:layout_constraintTop_toBottomOf="@id/txt_nominal" />
 
         <View
             android:id="@+id/garis3"
@@ -374,8 +369,7 @@
             android:textColor="@color/black"
             android:textSize="8dp"
             app:layout_constraintStart_toStartOf="@+id/txt_biaya"
-            app:layout_constraintTop_toBottomOf="@id/garis3"
-            app:layout_constraintEnd_toEndOf="@id/rectTransfer"/>
+            app:layout_constraintTop_toBottomOf="@id/garis3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

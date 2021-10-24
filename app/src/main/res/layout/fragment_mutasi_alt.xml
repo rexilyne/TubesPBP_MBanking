@@ -65,6 +65,7 @@
             android:src="@drawable/ic_baseline_date_range_24"
             app:layout_constraintStart_toStartOf="@id/rectMutasi"
             app:layout_constraintTop_toBottomOf="@id/txt_cari"
+            android:onClick="@{fragment.btnTanggalAwal}"
             />
         <TextView
             android:id="@+id/txt_pilih"
@@ -75,7 +76,8 @@
             app:layout_constraintStart_toStartOf="@id/iconDate"
             android:textSize="12dp"
             android:text="Tanggal Awal"
-            app:layout_constraintTop_toBottomOf="@id/txt_cari" />
+            app:layout_constraintTop_toBottomOf="@id/txt_cari"
+            android:onClick="@{fragment.btnTanggalAwal}"/>
         <TextView
             android:id="@+id/txt_hari"
             android:layout_width="wrap_content"
@@ -85,7 +87,8 @@
             android:text="Pilih Tanggal"
             app:layout_constraintStart_toStartOf="@id/iconDate"
             app:layout_constraintTop_toBottomOf="@id/txt_pilih"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:onClick="@{fragment.btnTanggalAwal}"/>
         <TextView
             android:id="@+id/btnTglAwal"
             android:layout_width="wrap_content"
@@ -97,6 +100,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@id/rectMutasi"
             app:layout_constraintTop_toTopOf="@id/rectMutasi"
+            android:onClick="@{fragment.btnTanggalAwal}"
             />
         <View
             android:id="@+id/garis"
@@ -117,6 +121,7 @@
             android:src="@drawable/ic_baseline_date_range_24"
             app:layout_constraintStart_toStartOf="@id/rectMutasi"
             app:layout_constraintTop_toBottomOf="@id/garis"
+            android:onClick="@{fragment.btnTanggalAkhir}"
             />
         <TextView
             android:id="@+id/txt_pilih2"
@@ -127,7 +132,8 @@
             app:layout_constraintStart_toStartOf="@id/iconDate2"
             android:textSize="12dp"
             android:text="Tanggal Akhir"
-            app:layout_constraintTop_toBottomOf="@id/garis" />
+            app:layout_constraintTop_toBottomOf="@id/garis"
+            android:onClick="@{fragment.btnTanggalAkhir}"/>
         <TextView
             android:id="@+id/txt_hari2"
             android:layout_width="wrap_content"
@@ -137,7 +143,8 @@
             android:text="Pilih Tanggal"
             app:layout_constraintStart_toStartOf="@id/iconDate2"
             app:layout_constraintTop_toBottomOf="@id/txt_pilih2"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:onClick="@{fragment.btnTanggalAkhir}"/>
         <TextView
             android:id="@+id/btnTglAkhir"
             android:layout_width="wrap_content"
@@ -149,6 +156,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@id/rectMutasi"
             app:layout_constraintTop_toTopOf="@id/rectMutasi"
+            android:onClick="@{fragment.btnTanggalAkhir}"
             />
         <View
             android:id="@+id/garis2"
