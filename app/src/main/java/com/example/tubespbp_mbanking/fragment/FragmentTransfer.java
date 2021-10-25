@@ -50,7 +50,7 @@ public class FragmentTransfer extends Fragment {
 
     private User userLogin, userPenerima;
     private Aktivitas aktivitas;
-    private Mutasi mutasiPengirim, mutasiPenerima;
+    private Mutasi mutasiPengirim, mutasiPenerima, mutasiAdmin;
     private FragmentTransferBinding binding;
     private UserPreferences userPreferences;
     private List<User> userList, userPenerimaList;
@@ -107,6 +107,7 @@ public class FragmentTransfer extends Fragment {
         aktivitas = new Aktivitas();
         mutasiPengirim = new Mutasi();
         mutasiPenerima = new Mutasi();
+        mutasiAdmin = new Mutasi();
 
         binding.setUser(userLogin);
         binding.setAktivitas(aktivitas);
@@ -175,6 +176,15 @@ public class FragmentTransfer extends Fragment {
                             userPreferences.setLogin(userLogin);
 
                             addMutasi(mutasiPengirim);
+
+                            //Mutasi Biaya Admin
+                            mutasiAdmin.setAccountNumber(userLogin.getAccountNumber());
+                            mutasiAdmin.setNama(userLogin.getFirstName() + " " + userLogin.getLastName());
+                            mutasiAdmin.setTanggal(formattedDate);
+                            mutasiAdmin.setNominal(aktivitas.getBiayaAdmin());
+                            mutasiAdmin.setJenis("Biaya Admin");
+
+                            addMutasi(mutasiAdmin);
 
                             //Mutasi Penerima
                             mutasiPenerima.setAccountNumber(userPenerima.getAccountNumber());

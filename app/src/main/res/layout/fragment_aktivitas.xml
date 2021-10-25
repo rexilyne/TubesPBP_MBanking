@@ -38,7 +38,8 @@
             tools:listitem="@layout/recycler_item_aktivitas"
             app:layout_constraintTop_toBottomOf="@id/ivAktivitas"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingBottom="128dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
