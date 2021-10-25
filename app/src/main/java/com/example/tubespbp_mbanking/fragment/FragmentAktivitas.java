@@ -98,6 +98,9 @@ public class FragmentAktivitas extends Fragment {
 
         aktivitasList = new ArrayList<>();
         getAktivitasByAccNumber(userLogin.getAccountNumber());
+        if(aktivitasList.isEmpty()) {
+            Toast.makeText(FragmentAktivitas.this.getContext(), "Aktivitas kosong", Toast.LENGTH_SHORT).show();
+        }
 
         aktivitasAdapter = new AktivitasAdapter(aktivitasList, getActivity());
 
