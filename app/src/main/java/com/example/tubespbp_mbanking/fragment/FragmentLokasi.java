@@ -208,23 +208,23 @@ public class FragmentLokasi extends Fragment implements OnMapReadyCallback, Perm
 
 // Add symbol at specified lat/lon
                 //Mountain View
-//                symbol1 = symbolManager.create(new SymbolOptions()
-//                        .withLatLng(new LatLng(37.352147, -122.041437))
-//                        .withIconImage(MAKI_ICON_BANK)
-//                        .withIconSize(2.0f)
-//                        .withDraggable(false));
-//
-//                symbol2 = symbolManager.create(new SymbolOptions()
-//                        .withLatLng(new LatLng(37.382434, -122.064757))
-//                        .withIconImage(MAKI_ICON_BANK)
-//                        .withIconSize(2.0f)
-//                        .withDraggable(false));
-//
-//                symbol3 = symbolManager.create(new SymbolOptions()
-//                        .withLatLng(new LatLng(37.409710, -122.040066))
-//                        .withIconImage(MAKI_ICON_BANK)
-//                        .withIconSize(2.0f)
-//                        .withDraggable(false));
+                symbol1 = symbolManager.create(new SymbolOptions()
+                        .withLatLng(new LatLng(37.352147, -122.041437))
+                        .withIconImage(MAKI_ICON_BANK)
+                        .withIconSize(2.0f)
+                        .withDraggable(false));
+
+                symbol2 = symbolManager.create(new SymbolOptions()
+                        .withLatLng(new LatLng(37.382434, -122.064757))
+                        .withIconImage(MAKI_ICON_BANK)
+                        .withIconSize(2.0f)
+                        .withDraggable(false));
+
+                symbol3 = symbolManager.create(new SymbolOptions()
+                        .withLatLng(new LatLng(37.409710, -122.040066))
+                        .withIconImage(MAKI_ICON_BANK)
+                        .withIconSize(2.0f)
+                        .withDraggable(false));
 
                 //Jogja
 //                symbol1 = symbolManager.create(new SymbolOptions()
@@ -246,23 +246,23 @@ public class FragmentLokasi extends Fragment implements OnMapReadyCallback, Perm
 //                        .withDraggable(false));
 
                 //Bangka
-                symbol1 = symbolManager.create(new SymbolOptions()
-                        .withLatLng(new LatLng(-1.857493, 106.117985))
-                        .withIconImage(MAKI_ICON_BANK)
-                        .withIconSize(2.0f)
-                        .withDraggable(false));
-
-                symbol2 = symbolManager.create(new SymbolOptions()
-                        .withLatLng(new LatLng(-1.858797, 106.119752))
-                        .withIconImage(MAKI_ICON_BANK)
-                        .withIconSize(2.0f)
-                        .withDraggable(false));
-
-                symbol3 = symbolManager.create(new SymbolOptions()
-                        .withLatLng(new LatLng(-1.860094, 106.117399))
-                        .withIconImage(MAKI_ICON_BANK)
-                        .withIconSize(2.0f)
-                        .withDraggable(false));
+//                symbol1 = symbolManager.create(new SymbolOptions()
+//                        .withLatLng(new LatLng(-1.857493, 106.117985))
+//                        .withIconImage(MAKI_ICON_BANK)
+//                        .withIconSize(2.0f)
+//                        .withDraggable(false));
+//
+//                symbol2 = symbolManager.create(new SymbolOptions()
+//                        .withLatLng(new LatLng(-1.858797, 106.119752))
+//                        .withIconImage(MAKI_ICON_BANK)
+//                        .withIconSize(2.0f)
+//                        .withDraggable(false));
+//
+//                symbol3 = symbolManager.create(new SymbolOptions()
+//                        .withLatLng(new LatLng(-1.860094, 106.117399))
+//                        .withIconImage(MAKI_ICON_BANK)
+//                        .withIconSize(2.0f)
+//                        .withDraggable(false));
 
 // Add click listener and change the symbol to a cafe icon on click
                 symbolManager.addClickListener(new OnSymbolClickListener() {

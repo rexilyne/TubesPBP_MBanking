@@ -46,330 +46,352 @@
             app:layout_constraintStart_toStartOf="@+id/ivTransfer"
             app:layout_constraintTop_toTopOf="@id/ivTransfer" />
 
-        <ImageView
-            android:id="@+id/rectTransfer"
+        <androidx.cardview.widget.CardView
+            android:id="@id/rectTransfer"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:src="@drawable/rectangle_white"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="500dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivTransfer" />
-
-        <LinearLayout
-            android:id="@+id/iconTransfer"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="20sp"
-            android:layout_marginTop="26sp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/rectTransfer"
-            app:layout_constraintTop_toTopOf="@id/rectTransfer">
-
-            <androidx.cardview.widget.CardView
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivTransfer"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:flow_wrapMode="aligned">
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                card_view:cardCornerRadius="40dp">
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:id="@+id/iconTransfer"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="20sp"
+                    android:layout_marginTop="26sp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:layout_width="match_parent"
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        card_view:cardCornerRadius="60dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/skittle" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_transaksi"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/skittle" />
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
+                    android:layout_marginStart="12sp"
+                    android:layout_marginTop="22dp"
+                    android:text="Transaksi"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toEndOf="@+id/iconTransfer"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_transaksi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12sp"
-            android:layout_marginTop="22dp"
-            android:text="Transaksi"
-            android:textColor="@color/black"
-            android:textSize="10sp"
-            app:layout_constraintStart_toEndOf="@+id/iconTransfer"
-            app:layout_constraintTop_toTopOf="@id/rectTransfer" />
+                <TextView
+                    android:id="@+id/tv_keterangan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12sp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{aktivitas.nama + ` - ` + aktivitas.accountNumberDest}"
+                    tools:text="ABC - XXXXXXXXXX"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toEndOf="@+id/iconTransfer"
+                    app:layout_constraintTop_toBottomOf="@id/tv_transaksi" />
 
-        <TextView
-            android:id="@+id/tv_keterangan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12sp"
-            android:layout_marginEnd="16dp"
-            android:text="@{aktivitas.nama + ` - ` + aktivitas.accountNumberDest}"
-            tools:text="ABC - XXXXXXXXXX"
-            android:textSize="8dp"
-            app:layout_constraintStart_toEndOf="@+id/iconTransfer"
-            app:layout_constraintTop_toBottomOf="@id/tv_transaksi" />
+                <TextView
+                    android:id="@+id/tv_no_referensi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12sp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{`No Ref - ` + aktivitas.noReferensi}"
+                    tools:text="No Ref - XXXXXXXXXXXX"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toEndOf="@+id/iconTransfer"
+                    app:layout_constraintTop_toBottomOf="@id/tv_keterangan" />
 
-        <TextView
-            android:id="@+id/tv_no_referensi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12sp"
-            android:layout_marginEnd="16dp"
-            android:text="@{`No Ref - ` + aktivitas.noReferensi}"
-            tools:text="No Ref - XXXXXXXXXXXX"
-            android:textSize="8dp"
-            app:layout_constraintStart_toEndOf="@+id/iconTransfer"
-            app:layout_constraintTop_toBottomOf="@id/tv_keterangan" />
+                <TextView
+                    android:id="@+id/tv_tanggal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12sp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{aktivitas.tanggal}"
+                    tools:text="02 Oktober 2021 12.19"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toEndOf="@+id/iconTransfer"
+                    app:layout_constraintTop_toBottomOf="@id/tv_no_referensi" />
 
-        <TextView
-            android:id="@+id/tv_tanggal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12sp"
-            android:layout_marginEnd="16dp"
-            android:text="@{aktivitas.tanggal}"
-            tools:text="02 Oktober 2021 12.19"
-            android:textSize="8dp"
-            app:layout_constraintStart_toEndOf="@+id/iconTransfer"
-            app:layout_constraintTop_toBottomOf="@id/tv_no_referensi" />
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="42dp"
+                    android:layout_marginEnd="20sp"
+                    android:background="#00CED1"
+                    android:text="Berhasil"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_status"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="42dp"
-            android:layout_marginEnd="20sp"
-            android:background="#00CED1"
-            android:text="Berhasil"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/rectTransfer"
-            app:layout_constraintTop_toTopOf="@id/rectTransfer" />
+                <View
+                    android:id="@+id/garis"
+                    android:layout_width="340dp"
+                    android:layout_height="2px"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_tanggal" />
 
-        <View
-            android:id="@+id/garis"
-            android:layout_width="320dp"
-            android:layout_height="2px"
-            android:layout_marginTop="8sp"
-            android:background="@color/black"
-            app:layout_constraintEnd_toEndOf="@id/rectTransfer"
-            app:layout_constraintStart_toStartOf="@id/rectTransfer"
-            app:layout_constraintTop_toBottomOf="@id/tv_tanggal" />
+                <TextView
+                    android:id="@+id/tv_sumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24sp"
+                    android:layout_marginTop="24dp"
+                    android:text="Sumber Dana"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/garis" />
 
-        <TextView
-            android:id="@+id/tv_sumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24sp"
-            android:layout_marginTop="25sp"
-            android:text="Sumber Dana"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
-            app:layout_constraintTop_toBottomOf="@id/garis" />
+                <TextView
+                    android:id="@+id/txt_sumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="64dp"
+                    android:text="@{aktivitas.accountNumberOri}"
+                    tools:text="XXXXXXXXXXXX"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/garis" />
 
-        <TextView
-            android:id="@+id/txt_sumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25sp"
-            android:layout_marginEnd="16dp"
-            android:text="@{aktivitas.accountNumberOri}"
-            tools:text="XXXXXXXXXXXX"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/rectTransfer"
-            app:layout_constraintTop_toBottomOf="@id/garis" />
+                <TextView
+                    android:id="@+id/tv_jenis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24sp"
+                    android:layout_marginTop="24dp"
+                    android:text="Jenis Transaksi"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sumber" />
 
-        <TextView
-            android:id="@+id/tv_jenis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24sp"
-            android:layout_marginTop="25sp"
-            android:text="Jenis Transaksi"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
-            app:layout_constraintTop_toBottomOf="@id/tv_sumber" />
+                <TextView
+                    android:id="@+id/txt_jenis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Transfer"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/txt_sumber"
+                    app:layout_constraintTop_toBottomOf="@id/txt_sumber" />
 
-        <TextView
-            android:id="@+id/txt_jenis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25sp"
-            android:text="Transfer"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/txt_sumber"
-            app:layout_constraintTop_toBottomOf="@id/txt_sumber" />
+                <TextView
+                    android:id="@+id/tv_nomorRekening"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24sp"
+                    android:layout_marginTop="24dp"
+                    android:text="Nomor Rekening"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_jenis" />
 
-        <TextView
-            android:id="@+id/tv_nomorRekening"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24sp"
-            android:layout_marginTop="25sp"
-            android:text="Nomor Rekening"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
-            app:layout_constraintTop_toBottomOf="@id/tv_jenis" />
+                <TextView
+                    android:id="@+id/txt_nomorRekening"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{aktivitas.accountNumberDest}"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/txt_jenis"
+                    app:layout_constraintTop_toBottomOf="@id/txt_jenis"
+                    tools:text="XYXYXYXYXYXY" />
 
-        <TextView
-            android:id="@+id/txt_nomorRekening"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25sp"
-            android:layout_marginEnd="16dp"
-            android:text="@{aktivitas.accountNumberDest}"
-            tools:text="XYXYXYXYXYXY"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/txt_jenis"
-            app:layout_constraintTop_toBottomOf="@id/txt_jenis" />
+                <TextView
+                    android:id="@+id/tv_namaPelanggan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24sp"
+                    android:layout_marginTop="24dp"
+                    android:text="Nama Pelanggan"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_nomorRekening" />
 
-        <TextView
-            android:id="@+id/tv_namaPelanggan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24sp"
-            android:layout_marginTop="25sp"
-            android:text="Nama Pelanggan"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
-            app:layout_constraintTop_toBottomOf="@id/tv_nomorRekening" />
+                <TextView
+                    android:id="@+id/txt_namaPelanggan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{aktivitas.nama}"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/txt_nomorRekening"
+                    app:layout_constraintTop_toBottomOf="@id/txt_nomorRekening"
+                    tools:text="Jeje" />
 
-        <TextView
-            android:id="@+id/txt_namaPelanggan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25sp"
-            android:layout_marginEnd="16dp"
-            android:text="@{aktivitas.nama}"
-            tools:text="Jeje"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/txt_nomorRekening"
-            app:layout_constraintTop_toBottomOf="@id/txt_nomorRekening" />
+                <TextView
+                    android:id="@+id/tv_ket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24sp"
+                    android:layout_marginTop="24dp"
+                    android:text="Keterangan"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_namaPelanggan" />
 
-        <TextView
-            android:id="@+id/tv_ket"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24sp"
-            android:layout_marginTop="25sp"
-            android:text="Keterangan"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
-            app:layout_constraintTop_toBottomOf="@id/tv_namaPelanggan" />
+                <TextView
+                    android:id="@+id/txt_ket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{aktivitas.keterangan}"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/txt_namaPelanggan"
+                    app:layout_constraintTop_toBottomOf="@id/txt_namaPelanggan"
+                    tools:text="Bayar Hutang" />
 
-        <TextView
-            android:id="@+id/txt_ket"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25sp"
-            android:layout_marginEnd="16dp"
-            android:text="@{aktivitas.keterangan}"
-            tools:text="Bayar Hutang"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/txt_namaPelanggan"
-            app:layout_constraintTop_toBottomOf="@id/txt_namaPelanggan" />
+                <View
+                    android:id="@+id/garis2"
+                    android:layout_width="340dp"
+                    android:layout_height="2px"
+                    android:layout_marginTop="20sp"
+                    android:background="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_ket" />
 
-        <View
-            android:id="@+id/garis2"
-            android:layout_width="320dp"
-            android:layout_height="2px"
-            android:layout_marginTop="20sp"
-            android:background="@color/black"
-            app:layout_constraintEnd_toEndOf="@id/rectTransfer"
-            app:layout_constraintStart_toStartOf="@id/rectTransfer"
-            app:layout_constraintTop_toBottomOf="@id/tv_ket" />
+                <TextView
+                    android:id="@+id/tv_nominal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24sp"
+                    android:layout_marginTop="24dp"
+                    android:text="Nominal"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/garis2" />
 
-        <TextView
-            android:id="@+id/tv_nominal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24sp"
-            android:layout_marginTop="25sp"
-            android:text="Nominal"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
-            app:layout_constraintTop_toBottomOf="@id/garis2" />
+                <TextView
+                    android:id="@+id/txt_nominal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{`Rp ` + aktivitas.nominal + `,00`}"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/txt_ket"
+                    app:layout_constraintTop_toBottomOf="@id/garis2"
+                    tools:text="Rp.50.000,00" />
 
-        <TextView
-            android:id="@+id/txt_nominal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25sp"
-            android:layout_marginEnd="16dp"
-            android:text="@{`Rp ` + aktivitas.nominal + `,00`}"
-            tools:text="Rp.50.000,00"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/txt_namaPelanggan"
-            app:layout_constraintTop_toBottomOf="@id/garis2" />
+                <TextView
+                    android:id="@+id/tv_biaya"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24sp"
+                    android:layout_marginTop="24dp"
+                    android:text="Biaya Admin"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_nominal" />
 
-        <TextView
-            android:id="@+id/tv_biaya"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24sp"
-            android:layout_marginTop="25sp"
-            android:text="Biaya Admin"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
-            app:layout_constraintTop_toBottomOf="@id/tv_nominal" />
+                <TextView
+                    android:id="@+id/txt_biaya"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{`Rp ` + aktivitas.biayaAdmin + `,00`}"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/txt_nominal"
+                    app:layout_constraintTop_toBottomOf="@id/txt_nominal"
+                    tools:text="Rp.1.000,00" />
 
-        <TextView
-            android:id="@+id/txt_biaya"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25sp"
-            android:layout_marginEnd="16dp"
-            android:text="@{`Rp ` + aktivitas.biayaAdmin + `,00`}"
-            tools:text="Rp.1.000,00"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/txt_nominal"
-            app:layout_constraintTop_toBottomOf="@id/txt_nominal" />
+                <View
+                    android:id="@+id/garis3"
+                    android:layout_width="340dp"
+                    android:layout_height="2px"
+                    android:layout_marginTop="20sp"
+                    android:background="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_biaya" />
 
-        <View
-            android:id="@+id/garis3"
-            android:layout_width="320dp"
-            android:layout_height="2px"
-            android:layout_marginTop="20sp"
-            android:background="@color/black"
-            app:layout_constraintEnd_toEndOf="@id/rectTransfer"
-            app:layout_constraintStart_toStartOf="@id/rectTransfer"
-            app:layout_constraintTop_toBottomOf="@id/tv_biaya" />
+                <TextView
+                    android:id="@+id/tv_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24sp"
+                    android:layout_marginTop="24dp"
+                    android:text="Total"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/garis3" />
 
-        <TextView
-            android:id="@+id/tv_total"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24sp"
-            android:layout_marginTop="25sp"
-            android:text="Total"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/rectTransfer"
-            app:layout_constraintTop_toBottomOf="@id/garis3" />
+                <TextView
+                    android:id="@+id/txt_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{`Rp ` + aktivitas.total + `,00`}"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/txt_biaya"
+                    app:layout_constraintTop_toBottomOf="@id/garis3"
+                    tools:text="Rp.51.000,00" />
 
-        <TextView
-            android:id="@+id/txt_total"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25sp"
-            android:layout_marginEnd="16dp"
-            android:text="@{`Rp ` + aktivitas.total + `,00`}"
-            tools:text="Rp.51.000,00"
-            android:textColor="@color/black"
-            android:textSize="8dp"
-            app:layout_constraintStart_toStartOf="@+id/txt_biaya"
-            app:layout_constraintTop_toBottomOf="@id/garis3" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

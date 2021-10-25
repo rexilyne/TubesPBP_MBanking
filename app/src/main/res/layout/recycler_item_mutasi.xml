@@ -9,7 +9,7 @@
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:orientation="vertical"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
@@ -25,7 +25,7 @@
                 android:layout_height="45dp"
                 android:orientation="vertical"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="16dp"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent">
                 <androidx.cardview.widget.CardView
@@ -46,23 +46,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12sp"
-                android:layout_marginTop="16dp"
-                android:text="@{mutasi.jenis}"
+                android:layout_marginTop="12dp"
                 tools:text="TRF ABC"
+                android:text="@{mutasi.jenis}"
                 android:textColor="@color/black"
-                android:textSize="10sp"
+                android:textSize="14sp"
                 card_view:layout_constraintStart_toEndOf="@+id/iconTransfer"
                 card_view:layout_constraintTop_toTopOf="parent" />
             <TextView
                 android:id="@+id/tv_tanggalJam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="8dp"
+                android:textSize="12dp"
                 android:layout_marginStart="12sp"
                 card_view:layout_constraintStart_toEndOf="@+id/iconTransfer"
                 card_view:layout_constraintTop_toBottomOf="@id/tv_keterangan"
-                android:text="@{mutasi.tanggal}"
-                tools:text="02 Oktober 2021 12.19"/>
+                tools:text="02 Oktober 2021 12.19"
+                android:text="@{mutasi.tanggal}"/>
             <TextView
                 android:id="@+id/tv_biaya"
                 android:layout_width="100dp"
@@ -70,8 +70,8 @@
                 android:background="@color/white"
                 android:textAlignment="textEnd"
                 android:layout_marginEnd="20sp"
-                android:layout_marginTop="22dp"
-                android:textSize="10dp"
+                android:layout_marginTop="18dp"
+                android:textSize="14dp"
                 card_view:layout_constraintTop_toTopOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 android:textColor="@color/black"
