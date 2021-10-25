@@ -273,9 +273,7 @@ public class PinDialog extends Dialog{
                 Toast.makeText(PinDialog.super.getContext(), "Pin harus lengkap", Toast.LENGTH_SHORT).show();
             } else {
                 setConfirmedPin(binding.getPin().getAssembledPin());
-                if(!isNumeric(confirmedPin)) {
-                    Toast.makeText(PinDialog.super.getContext(), "Pin harus berupa angka", Toast.LENGTH_SHORT).show();
-                } else if(!confirmedPin.equals(userPin)) {
+                if(!confirmedPin.equals(userPin)) {
                     Toast.makeText(PinDialog.super.getContext(), "Pin salah", Toast.LENGTH_SHORT).show();
                 } else {
                     pinDialogListener.pinConfirmed(confirmedPin);

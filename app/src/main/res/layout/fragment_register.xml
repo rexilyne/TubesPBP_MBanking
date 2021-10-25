@@ -200,6 +200,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Account Number"
                 android:text="@={user.accountNumber}"
+                android:inputType="number"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -232,6 +233,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Pin"
                 android:text="@={user.pin}"
+                android:inputType="number"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>

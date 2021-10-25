@@ -78,6 +78,7 @@ public class AktivitasAdapter extends RecyclerView.Adapter<AktivitasAdapter.Recy
         ((MainActivity)context).getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.layout_app_content,fragment)
+                .addToBackStack("aktivitas")
                 .commit();
     }
 }

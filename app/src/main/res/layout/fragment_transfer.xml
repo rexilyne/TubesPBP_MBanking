@@ -126,6 +126,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Rekening Tujuan"
                 android:text="@={aktivitas.accountNumberDest}"
+                android:inputType="number"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -164,6 +165,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Jumlah Transfer"
                 android:text="@={aktivitas.stringNominal}"
+                android:inputType="number"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>

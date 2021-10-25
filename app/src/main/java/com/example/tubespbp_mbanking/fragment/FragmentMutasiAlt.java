@@ -128,9 +128,11 @@ public class FragmentMutasiAlt extends Fragment {
 
             if(min.after(max)) {
                 Toast.makeText(FragmentMutasiAlt.this.getContext(), "Tanggal awal tidak boleh melebihi tanggal akhir", Toast.LENGTH_SHORT).show();
-                filteredList = new ArrayList<>();
-                mutasiAdapter = new MutasiAdapter(filteredList);
-                recyclerView.setAdapter(mutasiAdapter);
+                if(mutasiAdapter!= null) {
+                    filteredList = new ArrayList<>();
+                    mutasiAdapter = new MutasiAdapter(filteredList);
+                    recyclerView.setAdapter(mutasiAdapter);
+                }
                 return;
             }
 

@@ -47,6 +47,7 @@ public class FragmentDetailAkun extends Fragment {
     private FragmentDetailAkunBinding binding;
     private UserPreferences userPreferences;
     private List<User> userList;
+    private String tempEmail;
 
     public FragmentDetailAkun() {
         // Required empty public constructor
@@ -97,12 +98,12 @@ public class FragmentDetailAkun extends Fragment {
 
         userLogin = userPreferences.getUserLogin();
         binding.setUser(userLogin);
+        tempEmail = userLogin.getEmail();
     }
 
     public View.OnClickListener btnUpdate = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            String tempEmail = userLogin.getEmail();
             getUserByEmail(userLogin.getEmail());
             if(!userList.isEmpty()) {
                 userCheck = userList.get(0);
@@ -115,13 +116,14 @@ public class FragmentDetailAkun extends Fragment {
                 Toast.makeText(getActivity(), "Email tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else if(!isValidEmail(userLogin.getEmail())) {
                 Toast.makeText(getActivity(), "Format email salah", Toast.LENGTH_SHORT).show();
-            } else if(!userList.isEmpty() && !userLogin.getEmail().equals(tempEmail) && userCheck.getEmail().equals(userLogin.getEmail())) {
+            } else if(!userList.isEmpty() && !binding.etEmail.getEditText().getText().toString().equals(tempEmail)) {
                 Toast.makeText(getActivity(), "Email sudah ada", Toast.LENGTH_SHORT).show();
             } else if(userLogin.getPassword().isEmpty()) {
                 Toast.makeText(getActivity(), "Password tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else {
                 updateUser(userLogin);
                 userPreferences.setLogin(userLogin);
+                tempEmail = userLogin.getEmail();
             }
         }
     };

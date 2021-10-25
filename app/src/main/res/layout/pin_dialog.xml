@@ -45,6 +45,7 @@
                     android:maxLength="1"
                     android:text="@={pin.d1}"
                     android:textAlignment="center"
+                    android:inputType="number"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -63,6 +64,7 @@
                     android:maxLength="1"
                     android:text="@={pin.d2}"
                     android:textAlignment="center"
+                    android:inputType="number"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -81,6 +83,7 @@
                     android:maxLength="1"
                     android:text="@={pin.d3}"
                     android:textAlignment="center"
+                    android:inputType="number"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -99,6 +102,7 @@
                     android:maxLength="1"
                     android:text="@={pin.d4}"
                     android:textAlignment="center"
+                    android:inputType="number"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -117,6 +121,7 @@
                     android:maxLength="1"
                     android:text="@={pin.d5}"
                     android:textAlignment="center"
+                    android:inputType="number"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -135,6 +140,7 @@
                     android:maxLength="1"
                     android:text="@={pin.d6}"
                     android:textAlignment="center"
+                    android:inputType="number"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
