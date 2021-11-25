@@ -92,6 +92,12 @@ public class FragmentAkun extends Fragment {
 
         checkLogin();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
     
     public View.OnClickListener btnDetailAkun = new View.OnClickListener() {
         @Override

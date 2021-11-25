@@ -356,6 +356,11 @@ public class FragmentLokasi extends Fragment implements OnMapReadyCallback, Perm
         mapView.onLowMemory();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 
     @SuppressWarnings( {"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {

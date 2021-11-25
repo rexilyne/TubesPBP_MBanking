@@ -113,6 +113,12 @@ public class FragmentMutasiAlt extends Fragment {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         getParentFragmentManager().popBackStack("mutasi", FragmentManager.POP_BACK_STACK_INCLUSIVE);

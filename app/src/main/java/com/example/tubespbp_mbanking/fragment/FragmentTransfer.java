@@ -113,6 +113,12 @@ public class FragmentTransfer extends Fragment {
         binding.setAktivitas(aktivitas);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     public View.OnClickListener btnTransfer = new View.OnClickListener() {
         @Override
         public void onClick(View view) {

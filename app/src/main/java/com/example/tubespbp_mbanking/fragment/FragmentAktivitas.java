@@ -109,6 +109,12 @@ public class FragmentAktivitas extends Fragment {
         recyclerView.setAdapter(aktivitasAdapter);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void getAktivitasByAccNumber(String search) {
         aktivitasList = DatabaseAktivitas.getInstance(getActivity().getApplicationContext())
                 .getDatabase()

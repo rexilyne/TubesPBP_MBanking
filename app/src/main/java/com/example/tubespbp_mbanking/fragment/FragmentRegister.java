@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,15 @@ import com.example.tubespbp_mbanking.R;
 import com.example.tubespbp_mbanking.database.DatabaseUser;
 import com.example.tubespbp_mbanking.databinding.FragmentRegisterBinding;
 import com.example.tubespbp_mbanking.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Executor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,6 +51,8 @@ public class FragmentRegister extends Fragment {
     User userRegister, userCheck;
     FragmentRegisterBinding binding;
     private List<User> userList;
+    private FirebaseAuth mAuth;
+    public static final String TAG = "FragmentRegister";
 
     public FragmentRegister() {
         // Required empty public constructor
@@ -74,6 +83,7 @@ public class FragmentRegister extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -95,6 +105,12 @@ public class FragmentRegister extends Fragment {
         binding.setUser(userRegister);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     public void changeFragment(Fragment fragment){
         getParentFragmentManager().popBackStack("login", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         getParentFragmentManager()
@@ -106,10 +122,10 @@ public class FragmentRegister extends Fragment {
     public View.OnClickListener btnRegister = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            getUserByEmail(userRegister.getEmail());
-            if(!userList.isEmpty()) {
-                userCheck = userList.get(0);
-            }
+//            getUserByEmail(userRegister.getEmail());
+//            if(!userList.isEmpty()) {
+//                userCheck = userList.get(0);
+//            }
             if(binding.etFirstName.getEditText().getText().toString().isEmpty()) {
                 Toast.makeText(getActivity(), "Nama depan tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else if(binding.etLastName.getEditText().getText().toString().isEmpty()) {
@@ -118,17 +134,21 @@ public class FragmentRegister extends Fragment {
                 Toast.makeText(getActivity(), "Email tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else if(!isValidEmail(userRegister.getEmail())) {
                 Toast.makeText(getActivity(), "Format email salah", Toast.LENGTH_SHORT).show();
-            } else if(!userList.isEmpty() && userCheck.getEmail().equals(userRegister.getEmail())) {
-                Toast.makeText(getActivity(), "Email sudah ada", Toast.LENGTH_SHORT).show();
-            } else if(binding.etPassword.getEditText().getText().toString().isEmpty()) {
+            }
+//            else if(!userList.isEmpty() && userCheck.getEmail().equals(userRegister.getEmail())) {
+//                Toast.makeText(getActivity(), "Email sudah ada", Toast.LENGTH_SHORT).show();
+//            }
+            else if(binding.etPassword.getEditText().getText().toString().isEmpty()) {
                 Toast.makeText(getActivity(), "Password tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else if(binding.etAccountNumber.getEditText().getText().toString().isEmpty()) {
                 Toast.makeText(getActivity(), "Nomor rekening tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else if(!isNumeric(userRegister.getAccountNumber())) {
                 Toast.makeText(getActivity(), "Nomor rekening harus angka", Toast.LENGTH_SHORT).show();
-            } else if(!userList.isEmpty() && userCheck.getAccountNumber().equals(userRegister.getAccountNumber())) {
-                Toast.makeText(getActivity(), "Nomor rekening sudah ada", Toast.LENGTH_SHORT).show();
-            } else if(binding.etPin.getEditText().getText().toString().isEmpty()) {
+            }
+//            else if(!userList.isEmpty() && userCheck.getAccountNumber().equals(userRegister.getAccountNumber())) {
+//                Toast.makeText(getActivity(), "Nomor rekening sudah ada", Toast.LENGTH_SHORT).show();
+//            }
+            else if(binding.etPin.getEditText().getText().toString().isEmpty()) {
                 Toast.makeText(getActivity(), "Pin tidak boleh ksoong", Toast.LENGTH_SHORT).show();
             } else if(!isNumeric(userRegister.getPin())) {
                 Toast.makeText(getActivity(), "Pin harus angka", Toast.LENGTH_SHORT).show();
@@ -139,40 +159,49 @@ public class FragmentRegister extends Fragment {
                 int n = rand.nextInt(10000000);
                 n += 10000001;
                 userRegister.setNominal(n);
-                addUser();
-                Toast.makeText(getActivity(), "Berhasil menambahkan user", Toast.LENGTH_SHORT).show();
+                addUser(userRegister.getEmail(), userRegister.getPassword());
                 changeFragment(new FragmentLogin());
 
             }
         }
     };
 
-    private void addUser() {
-        class AddUser extends AsyncTask<Void, Void, Void> {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                User user = binding.getUser();
-
-                DatabaseUser.getInstance(getActivity().getApplicationContext())
-                        .getDatabase()
-                        .userDao()
-                        .insertUser(user);
-
-                return null;
-            }
-        }
-
-        AddUser addUser = new AddUser(  );
-        addUser.execute();
+    private void addUser(String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()) {
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if(user != null) {
+                                sendEmail(user);
+                            }
+                        } else {
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        }
+                    }
+                });
     }
 
-    private void getUserByEmail(String search) {
-        userList = DatabaseUser.getInstance(getActivity().getApplicationContext())
-                .getDatabase()
-                .userDao()
-                .getUserByEmail(search);
+    private void sendEmail(FirebaseUser user) {
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Email sent.");
+                        }
+                    }
+                });
     }
+
+//    private void getUserByEmail(String search) {
+//        userList = DatabaseUser.getInstance(getActivity().getApplicationContext())
+//                .getDatabase()
+//                .userDao()
+//                .getUserByEmail(search);
+//    }
 
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {

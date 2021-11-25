@@ -18,6 +18,7 @@ import com.example.tubespbp_mbanking.database.DatabaseUser;
 import com.example.tubespbp_mbanking.databinding.FragmentLoginBinding;
 import com.example.tubespbp_mbanking.model.User;
 import com.example.tubespbp_mbanking.preferences.UserPreferences;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ public class FragmentLogin extends Fragment {
     private FragmentLoginBinding binding;
     private UserPreferences userPreferences;
     private List<User> userList;
+    private FirebaseAuth mAuth;
 
     public FragmentLogin() {
         // Required empty public constructor
@@ -72,6 +74,7 @@ public class FragmentLogin extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -96,6 +99,12 @@ public class FragmentLogin extends Fragment {
         binding.setUser(userLogin);
 
         checkLogin();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     public void changeFragment(Fragment fragment){

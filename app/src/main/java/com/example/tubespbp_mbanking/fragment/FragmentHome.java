@@ -94,6 +94,12 @@ public class FragmentHome extends Fragment {
         checkLogin();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void checkLogin() {
         if(!userPreferences.checkLogin()) {
             startActivity(new Intent(getActivity(), AuthenticationActivity.class));

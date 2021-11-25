@@ -101,6 +101,12 @@ public class FragmentDetailAkun extends Fragment {
         tempEmail = userLogin.getEmail();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     public View.OnClickListener btnUpdate = new View.OnClickListener() {
         @Override
         public void onClick(View view) {

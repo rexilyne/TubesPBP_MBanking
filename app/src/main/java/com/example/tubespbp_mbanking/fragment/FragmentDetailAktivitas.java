@@ -97,4 +97,10 @@ public class FragmentDetailAktivitas extends Fragment {
         binding.setUser(userLogin);
         binding.setAktivitas(aktivitas);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }
