@@ -22,6 +22,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
@@ -53,6 +56,8 @@ public class FragmentRegister extends Fragment {
     private List<User> userList;
     private FirebaseAuth mAuth;
     public static final String TAG = "FragmentRegister";
+    private boolean REGISTER_SUCCESS = false;
+    private String errorMessage;
 
     public FragmentRegister() {
         // Required empty public constructor
@@ -160,13 +165,16 @@ public class FragmentRegister extends Fragment {
                 n += 10000001;
                 userRegister.setNominal(n);
                 addUser(userRegister.getEmail(), userRegister.getPassword());
-                changeFragment(new FragmentLogin());
 
+                if(REGISTER_SUCCESS) {
+                    changeFragment(new FragmentLogin());
+                }
             }
         }
     };
 
     private void addUser(String email, String password) {
+        binding.loadRegister.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -177,11 +185,28 @@ public class FragmentRegister extends Fragment {
                             if(user != null) {
                                 sendEmail(user);
                             }
+                            REGISTER_SUCCESS = true;
                         } else {
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            try {
+                                throw task.getException();
+                            } catch (FirebaseAuthWeakPasswordException e) {
+                                errorMessage = "Password anda terlalu lemah";
+                                Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+//                                binding.etPassword.requestFocus();
+                            } catch (FirebaseAuthInvalidCredentialsException e) {
+                                errorMessage = "Email tidak valid";
+                                Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+                            } catch (FirebaseAuthUserCollisionException e) {
+                                errorMessage = "Email sudah dipakai";
+                                Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+                            } catch (Exception e) {
+                                errorMessage = e.getMessage();
+                            }
                         }
+                        binding.loadRegister.setVisibility(View.GONE);
                     }
                 });
+//        binding.loadRegister.setVisibility(View.GONE);
     }
 
     private void sendEmail(FirebaseUser user) {
