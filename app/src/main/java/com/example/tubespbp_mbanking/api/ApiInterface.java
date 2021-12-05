@@ -22,7 +22,7 @@ public interface ApiInterface {
 
     @Headers({"Accept: application/json"})
     @GET("userextra/{uid}")
-    Call<UserExtraResponse> getUserExtraByUid(@Path("uid") String uid);
+    Call<UserExtraResponse> getUserExtraByUid(@Path("id") String uid);
 
     @Headers({"Accept: application/json"})
     @POST("userextra")
@@ -30,8 +30,7 @@ public interface ApiInterface {
 
     @Headers({"Accept: application/json"})
     @PUT("userextra/{uid}")
-    Call<UserExtraResponse> updateUserExtra(@Path("uid") String uid,
-                                            @Body UserExtra userExtra);
+    Call<UserExtraResponse> updateUserExtra(@Body UserExtra userExtra, @Path("uid") String uid);
 
     // Aktivitas
     @Headers({"Accept: application/json"})
