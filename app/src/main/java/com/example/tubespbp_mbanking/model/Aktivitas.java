@@ -10,48 +10,24 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "aktivitas")
 public class Aktivitas extends BaseObservable implements Serializable {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-
-    @ColumnInfo(name = "accountNumberOri")
     private String accountNumberOri;
-
-    @ColumnInfo(name = "accountNumberDest")
     private String accountNumberDest;
-
-    @ColumnInfo(name = "noReferensi")
     private String noReferensi;
-
-    @ColumnInfo(name = "nama")
     private String nama;
-
-    @ColumnInfo(name = "tanggal")
     private String tanggal;
-
-    @ColumnInfo(name = "nominal")
     private int nominal;
-
-    @ColumnInfo(name = "jenis")
     private String jenis;
-
-    @ColumnInfo(name = "keterangan")
     private String keterangan;
-
-    @ColumnInfo(name = "biayaAdmin")
     private int biayaAdmin;
-
-    @ColumnInfo(name = "total")
     private int total;
 
     public Aktivitas() {}
 
     @Ignore
-    public Aktivitas(int id, String accountNumberOri, String accountNumberDest,
+    public Aktivitas(String accountNumberOri, String accountNumberDest,
                      String noReferensi, String nama, String tanggal, int nominal,
                      String jenis, String keterangan, int biayaAdmin, int total) {
-        this.setId(id);
         this.setAccountNumberOri(accountNumberOri);
         this.setAccountNumberDest(accountNumberDest);
         this.setNoReferensi(noReferensi);
@@ -62,17 +38,6 @@ public class Aktivitas extends BaseObservable implements Serializable {
         this.setKeterangan(keterangan);
         this.setBiayaAdmin(biayaAdmin);
         this.setTotal(total);
-    }
-
-
-    @Bindable
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-        notifyPropertyChanged(BR.id);
     }
 
     @Bindable

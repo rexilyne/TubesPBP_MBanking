@@ -38,22 +38,18 @@
             app:layout_constraintStart_toStartOf="@+id/ivAkun"
             app:layout_constraintTop_toTopOf="@id/ivAkun" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/iconCard"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            card_view:cardCornerRadius="80dp"
+            android:src="@drawable/nouser"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000"
             app:layout_constraintTop_toBottomOf="@id/ivAkun"
             app:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent">
-            <ImageView
-                android:id="@+id/iconMutasi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ayam"/>
-        </androidx.cardview.widget.CardView>
+            card_view:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -66,7 +62,7 @@
             android:textStyle="bold"
             android:textSize="16sp"
             android:labelFor="@id/et_first_name"
-            app:layout_constraintTop_toBottomOf="@id/iconCard"
+            app:layout_constraintTop_toBottomOf="@id/profileImage"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <com.google.android.material.textfield.TextInputLayout

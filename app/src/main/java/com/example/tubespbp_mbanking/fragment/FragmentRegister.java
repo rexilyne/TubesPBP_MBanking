@@ -15,9 +15,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.tubespbp_mbanking.R;
-import com.example.tubespbp_mbanking.database.DatabaseUser;
+import com.example.tubespbp_mbanking.api.ApiClient;
+import com.example.tubespbp_mbanking.api.ApiInterface;
 import com.example.tubespbp_mbanking.databinding.FragmentRegisterBinding;
 import com.example.tubespbp_mbanking.model.User;
+import com.example.tubespbp_mbanking.model.UserExtra;
+import com.example.tubespbp_mbanking.response.UserExtraResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -27,11 +30,17 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.json.JSONObject;
+
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,9 +64,11 @@ public class FragmentRegister extends Fragment {
     FragmentRegisterBinding binding;
     private List<User> userList;
     private FirebaseAuth mAuth;
-    public static final String TAG = "FragmentRegister";
-    private boolean REGISTER_SUCCESS = false;
+    private FirebaseUser firebaseUser;
+    public static final String TAG = FragmentRegister.class.getSimpleName();
+    private static boolean ACCOUNT_NUMBER_UNIQUE = false;
     private String errorMessage;
+    private ApiInterface apiService;
 
     public FragmentRegister() {
         // Required empty public constructor
@@ -89,6 +100,7 @@ public class FragmentRegister extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         mAuth = FirebaseAuth.getInstance();
+        apiService = ApiClient.getClient().create(ApiInterface.class);
     }
 
     @Override
@@ -150,25 +162,17 @@ public class FragmentRegister extends Fragment {
             } else if(!isNumeric(userRegister.getAccountNumber())) {
                 Toast.makeText(getActivity(), "Nomor rekening harus angka", Toast.LENGTH_SHORT).show();
             }
-//            else if(!userList.isEmpty() && userCheck.getAccountNumber().equals(userRegister.getAccountNumber())) {
+//            else if(!isUniqueAccountNumber(userRegister.getAccountNumber())) {
 //                Toast.makeText(getActivity(), "Nomor rekening sudah ada", Toast.LENGTH_SHORT).show();
 //            }
             else if(binding.etPin.getEditText().getText().toString().isEmpty()) {
-                Toast.makeText(getActivity(), "Pin tidak boleh ksoong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Pin tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else if(!isNumeric(userRegister.getPin())) {
                 Toast.makeText(getActivity(), "Pin harus angka", Toast.LENGTH_SHORT).show();
             } else if(userRegister.getPin().length() != 6) {
                 Toast.makeText(getActivity(), "Pin harus 6 digit", Toast.LENGTH_SHORT).show();
             } else {
-                Random rand = new Random();
-                int n = rand.nextInt(10000000);
-                n += 10000001;
-                userRegister.setNominal(n);
                 addUser(userRegister.getEmail(), userRegister.getPassword());
-
-                if(REGISTER_SUCCESS) {
-                    changeFragment(new FragmentLogin());
-                }
             }
         }
     };
@@ -180,15 +184,15 @@ public class FragmentRegister extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            if(user != null) {
-                                sendEmail(user);
+                            firebaseUser = mAuth.getCurrentUser();
+                            if(firebaseUser != null) {
+                                sendEmail(firebaseUser);
                             }
-                            REGISTER_SUCCESS = true;
                         } else {
                             try {
-                                throw task.getException();
+                                if(task.getException() != null) {
+                                    throw task.getException();
+                                }
                             } catch (FirebaseAuthWeakPasswordException e) {
                                 errorMessage = "Password anda terlalu lemah";
                                 Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
@@ -216,17 +220,11 @@ public class FragmentRegister extends Fragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "Email sent.");
+                            createUserExtra(userRegister, firebaseUser);
                         }
                     }
                 });
     }
-
-//    private void getUserByEmail(String search) {
-//        userList = DatabaseUser.getInstance(getActivity().getApplicationContext())
-//                .getDatabase()
-//                .userDao()
-//                .getUserByEmail(search);
-//    }
 
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
@@ -250,5 +248,52 @@ public class FragmentRegister extends Fragment {
         return false;
     }
 
+    private void createUserExtra(User user, FirebaseUser firebaseUser) {
+        binding.loadRegister.setVisibility(View.VISIBLE);
+        Random rand = new Random();
+        int n = rand.nextInt(10000000);
+        n += 10000001;
+        UserExtra userExtra = new UserExtra(
+                firebaseUser.getUid(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getAccountNumber(),
+                user.getPin(),
+                n,
+                "",
+                ""
+        );
+
+        Call<UserExtraResponse> call = apiService.createUserExtra(userExtra);
+        call.enqueue(new Callback<UserExtraResponse>() {
+            @Override
+            public void onResponse(Call<UserExtraResponse> call, Response<UserExtraResponse> response) {
+                if(response.isSuccessful()) {
+                    Toast.makeText(getActivity(), "Register berhasil", Toast.LENGTH_SHORT).show();
+                    changeFragment(new FragmentLogin());
+                } else {
+                    try {
+                        JSONObject jObjError = new
+                                JSONObject(response.errorBody().string());
+                        Toast.makeText(getActivity(),
+                                jObjError.getString("message"),
+                                Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(),
+                                e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                binding.loadRegister.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<UserExtraResponse> call, Throwable t) {
+                Toast.makeText(getActivity(),
+                        t.getMessage(), Toast.LENGTH_SHORT).show();
+                binding.loadRegister.setVisibility(View.GONE);
+            }
+        });
+    }
 
 }

@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.example.tubespbp_mbanking.R;
 import com.example.tubespbp_mbanking.adapter.MutasiAdapter;
-import com.example.tubespbp_mbanking.database.DatabaseMutasi;
 import com.example.tubespbp_mbanking.databinding.FragmentMutasiAltBinding;
 import com.example.tubespbp_mbanking.databinding.FragmentMutasiBinding;
 import com.example.tubespbp_mbanking.model.Mutasi;
@@ -219,9 +218,6 @@ public class FragmentMutasiAlt extends Fragment {
     };
 
     private void getMutasiByAccNumber(String search) {
-        mutasiList = DatabaseMutasi.getInstance(getActivity().getApplicationContext())
-                .getDatabase()
-                .mutasiDao()
-                .getMutasiByAccNumber(search);
+        // TODO
     }
 }

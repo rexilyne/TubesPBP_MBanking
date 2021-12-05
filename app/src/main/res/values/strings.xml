@@ -20,4 +20,6 @@
     <string name="lokasi_title"><b><i>Lokasi ATM</i></b></string>
     <string name="splash"><font color="#00CED1">M</font><font color="#FF7F50">Banking</font></string>
     <string name="kontak">Hubungi Kami<br></br>Silakan hubungi kami kapan pun</string>
+    <string name="buka_kamera">Buka kamera</string>
+    <string name="pilih_dari_galeri">Pilih dari galeri</string>
 </resources>

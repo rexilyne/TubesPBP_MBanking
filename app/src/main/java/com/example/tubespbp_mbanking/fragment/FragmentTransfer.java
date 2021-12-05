@@ -13,9 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.tubespbp_mbanking.R;
-import com.example.tubespbp_mbanking.database.DatabaseAktivitas;
-import com.example.tubespbp_mbanking.database.DatabaseMutasi;
-import com.example.tubespbp_mbanking.database.DatabaseUser;
 import com.example.tubespbp_mbanking.databinding.FragmentHomeBinding;
 import com.example.tubespbp_mbanking.databinding.FragmentTransferBinding;
 import com.example.tubespbp_mbanking.dialog.PinDialog;
@@ -157,7 +154,7 @@ public class FragmentTransfer extends Fragment {
                         if(userLogin.getPin().equals(pin)) {
                             //Aktivitas
                             aktivitas.setAccountNumberOri(userLogin.getAccountNumber());
-                            aktivitas.setNoReferensi(userLogin.getId() + userLogin.getAccountNumber());
+                            aktivitas.setNoReferensi(userLogin.getUid() + userLogin.getAccountNumber());
                             aktivitas.setNama(userPenerima.getFirstName() + " " + userPenerima.getLastName());
                             Date c = Calendar.getInstance().getTime();
 
@@ -245,70 +242,19 @@ public class FragmentTransfer extends Fragment {
     }
 
     private void addAktivitas(Aktivitas aktivitas) {
-        class AddAktivitas extends AsyncTask<Void, Void, Void> {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                DatabaseAktivitas.getInstance(getActivity().getApplicationContext())
-                        .getDatabase()
-                        .aktivitasDao()
-                        .insertAktivitas(aktivitas);
-
-                return null;
-            }
-        }
-
-        AddAktivitas addAktivitas = new AddAktivitas(  );
-        addAktivitas.execute();
+        // TODO
     }
 
     private void addMutasi(Mutasi mutasi) {
-        class AddMutasi extends AsyncTask<Void, Void, Void> {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                DatabaseMutasi.getInstance(getActivity().getApplicationContext())
-                        .getDatabase()
-                        .mutasiDao()
-                        .insertMutasi(mutasi);
-
-                return null;
-            }
-        }
-
-        AddMutasi addMutasi = new AddMutasi(  );
-        addMutasi.execute();
+        // TODO
     }
 
     private void getUserByAccNumber(String search) {
-        userPenerimaList = DatabaseUser.getInstance(getActivity().getApplicationContext())
-                .getDatabase()
-                .userDao()
-                .getUserByAccNumber(search);
+        // TODO
     }
 
     private void updateUser(User user) {
-        class UpdateUser extends AsyncTask<Void, Void, Void> {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                DatabaseUser.getInstance(getActivity().getApplicationContext())
-                        .getDatabase()
-                        .userDao()
-                        .updateUser(user);
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void unused) {
-                super.onPostExecute(unused);
-//                Toast.makeText(getActivity(), "Berhasil edit user", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        UpdateUser updateUser = new UpdateUser();
-        updateUser.execute();
+        // TODO
     }
 
     public void changeFragment(Fragment fragment){

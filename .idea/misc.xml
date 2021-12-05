@@ -24,7 +24,7 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/TubesPBP_MBanking/app/src/main/res/layout/bottom_mutasi_dialog.xml" value="0.1796875" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/TubesPBP_MBanking/app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/TubesPBP_MBanking/app/src/main/res/layout/fragment_aktivitas.xml" value="0.37056928034371645" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/TubesPBP_MBanking/app/src/main/res/layout/fragment_akun.xml" value="0.22" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/TubesPBP_MBanking/app/src/main/res/layout/fragment_akun.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/TubesPBP_MBanking/app/src/main/res/layout/fragment_detail_aktivitas.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/TubesPBP_MBanking/app/src/main/res/layout/fragment_detail_akun.xml" value="0.22" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/TubesPBP_MBanking/app/src/main/res/layout/fragment_detail_transfer.xml" value="0.22" />
@@ -38,6 +38,7 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/TubesPBP_MBanking/app/src/main/res/layout/fragment_register1.xml" value="0.22" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/TubesPBP_MBanking/app/src/main/res/layout/fragment_register2.xml" value="0.22" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/TubesPBP_MBanking/app/src/main/res/layout/fragment_transfer.xml" value="0.22" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/TubesPBP_MBanking/app/src/main/res/layout/layout_select_media.xml" value="0.12395833333333334" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/TubesPBP_MBanking/app/src/main/res/layout/pin_dialog.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/TubesPBP_MBanking/app/src/main/res/layout/recycler_item_aktivitas.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/TubesPBP_MBanking/app/src/main/res/layout/recycler_item_mutasi.xml" value="0.22" />

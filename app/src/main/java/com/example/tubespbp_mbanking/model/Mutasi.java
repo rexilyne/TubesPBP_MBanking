@@ -8,47 +8,22 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-
-@Entity(tableName = "mutasi")
 public class Mutasi extends BaseObservable {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-
-    @ColumnInfo(name = "accountNumber")
     private String accountNumber;
-
-    @ColumnInfo(name = "nama")
     private String nama;
-
-    @ColumnInfo(name = "tanggal")
     private String tanggal;
-
-    @ColumnInfo(name = "nominal")
     private int nominal;
-
-    @ColumnInfo(name = "jenis")
     private String jenis;
 
     public Mutasi () {}
 
     @Ignore
-    public Mutasi(int id, String accountNumber, String nama, String tanggal, int nominal, String jenis) {
-        this.setId(id);
+    public Mutasi(String accountNumber, String nama, String tanggal, int nominal, String jenis) {
         this.setAccountNumber(accountNumber);
         this.setNama(nama);
         this.setTanggal(tanggal);
         this.setNominal(nominal);
         this.setJenis(jenis);
-    }
-
-    @Bindable
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-        notifyPropertyChanged(BR.id);
     }
 
     @Bindable

@@ -1,5 +1,12 @@
 package com.example.tubespbp_mbanking.fragment;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -7,18 +14,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.tubespbp_mbanking.R;
-import com.example.tubespbp_mbanking.database.DatabaseUser;
 import com.example.tubespbp_mbanking.databinding.FragmentDetailAkunBinding;
 import com.example.tubespbp_mbanking.databinding.FragmentHomeBinding;
 import com.example.tubespbp_mbanking.model.User;
 import com.example.tubespbp_mbanking.preferences.UserPreferences;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -46,8 +57,13 @@ public class FragmentDetailAkun extends Fragment {
     private User userCheck;
     private FragmentDetailAkunBinding binding;
     private UserPreferences userPreferences;
-    private List<User> userList;
+    private Bitmap bitmap = null;
+//    private List<User> userList;
     private String tempEmail;
+
+    private static final int PERMISSION_REQUEST_CAMERA = 100;
+    private static final int CAMERA_REQUEST = 0;
+    private static final int GALLERY_PICTURE = 1;
 
     public FragmentDetailAkun() {
         // Required empty public constructor
@@ -99,6 +115,51 @@ public class FragmentDetailAkun extends Fragment {
         userLogin = userPreferences.getUserLogin();
         binding.setUser(userLogin);
         tempEmail = userLogin.getEmail();
+
+        binding.profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+                View selectMediaView = layoutInflater
+                        .inflate(R.layout.layout_select_media, null);
+
+                final AlertDialog alertDialog = new AlertDialog
+                        .Builder(selectMediaView.getContext()).create();
+
+                Button btnKamera = selectMediaView.findViewById(R.id.btn_kamera);
+                Button btnGaleri = selectMediaView.findViewById(R.id.btn_galeri);
+
+                btnKamera.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (getActivity().checkSelfPermission(Manifest.permission.CAMERA) ==
+                                PackageManager.PERMISSION_DENIED) {
+                            String[] permission = {Manifest.permission.CAMERA};
+                            requestPermissions(permission, PERMISSION_REQUEST_CAMERA);
+                        } else {
+                            // Membuka kamera
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(intent, CAMERA_REQUEST);
+                        }
+
+                        alertDialog.dismiss();
+                    }
+                });
+
+                btnGaleri.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        // Membuka galeri
+                        Intent intent = new Intent(Intent.ACTION_PICK,
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, GALLERY_PICTURE);
+
+                        alertDialog.dismiss();
+                    }
+                });
+
+                alertDialog.setView(selectMediaView);
+                alertDialog.show();
+            }
+        });
     }
 
     @Override
@@ -110,10 +171,10 @@ public class FragmentDetailAkun extends Fragment {
     public View.OnClickListener btnUpdate = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            getUserByEmail(userLogin.getEmail());
-            if(!userList.isEmpty()) {
-                userCheck = userList.get(0);
-            }
+//            getUserByEmail(userLogin.getEmail());
+//            if(!userList.isEmpty()) {
+//                userCheck = userList.get(0);
+//            }
             if(userLogin.getFirstName().isEmpty()) {
                 Toast.makeText(getActivity(), "Nama depan tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else if(userLogin.getLastName().isEmpty()) {
@@ -122,9 +183,11 @@ public class FragmentDetailAkun extends Fragment {
                 Toast.makeText(getActivity(), "Email tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else if(!isValidEmail(userLogin.getEmail())) {
                 Toast.makeText(getActivity(), "Format email salah", Toast.LENGTH_SHORT).show();
-            } else if(!userList.isEmpty() && !binding.etEmail.getEditText().getText().toString().equals(tempEmail)) {
-                Toast.makeText(getActivity(), "Email sudah ada", Toast.LENGTH_SHORT).show();
-            } else if(userLogin.getPassword().isEmpty()) {
+            }
+//            else if(!userList.isEmpty() && !binding.etEmail.getEditText().getText().toString().equals(tempEmail)) {
+//                Toast.makeText(getActivity(), "Email sudah ada", Toast.LENGTH_SHORT).show();
+//            }
+            else if(userLogin.getPassword().isEmpty()) {
                 Toast.makeText(getActivity(), "Password tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else {
                 updateUser(userLogin);
@@ -135,34 +198,11 @@ public class FragmentDetailAkun extends Fragment {
     };
 
     private void getUserByEmail(String search) {
-        userList = DatabaseUser.getInstance(getActivity().getApplicationContext())
-                .getDatabase()
-                .userDao()
-                .getUserByEmail(search);
+        // TODO
     }
 
     private void updateUser(User user) {
-        class UpdateUser extends AsyncTask<Void, Void, Void> {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                DatabaseUser.getInstance(getActivity())
-                        .getDatabase()
-                        .userDao()
-                        .updateUser(user);
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void unused) {
-                super.onPostExecute(unused);
-                Toast.makeText(getActivity(), "Berhasil edit data", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        UpdateUser updateUser = new UpdateUser();
-        updateUser.execute();
+        // TODO
     }
 
     public static boolean isValidEmail(String email)
@@ -173,5 +213,74 @@ public class FragmentDetailAkun extends Fragment {
             return matcher.find();
         }
         return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PERMISSION_REQUEST_CAMERA) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Membuka kamera
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, CAMERA_REQUEST);
+            } else {
+                Toast.makeText(getActivity(), "Permission denied.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (data == null)
+            return;
+
+        if (resultCode == getActivity().RESULT_OK && requestCode == GALLERY_PICTURE) {
+            Uri selectedImage = data.getData();
+
+            try {
+                InputStream inputStream = getActivity().getContentResolver().openInputStream(selectedImage);
+                bitmap = BitmapFactory.decodeStream(inputStream);
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), e.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        } else if (resultCode == getActivity().RESULT_OK && requestCode == CAMERA_REQUEST) {
+            bitmap = (Bitmap) data.getExtras().get("data");
+        }
+
+        bitmap = getResizedBitmap(bitmap, 512);
+        binding.profileImage.setImageBitmap(bitmap);
+    }
+
+    private Bitmap getResizedBitmap(Bitmap bitmap, int maxSize) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        float bitmapRatio = (float) width / (float) height;
+
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+
+        return Bitmap.createScaledBitmap(bitmap, width, height, true);
+    }
+
+    private String bitmapToBase64(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+        return encoded;
     }
 }

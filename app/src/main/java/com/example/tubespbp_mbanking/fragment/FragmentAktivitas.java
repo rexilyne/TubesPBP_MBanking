@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.tubespbp_mbanking.R;
 import com.example.tubespbp_mbanking.adapter.AktivitasAdapter;
-import com.example.tubespbp_mbanking.database.DatabaseAktivitas;
 import com.example.tubespbp_mbanking.databinding.FragmentAktivitasBinding;
 import com.example.tubespbp_mbanking.model.Aktivitas;
 import com.example.tubespbp_mbanking.model.User;
@@ -116,9 +115,6 @@ public class FragmentAktivitas extends Fragment {
     }
 
     private void getAktivitasByAccNumber(String search) {
-        aktivitasList = DatabaseAktivitas.getInstance(getActivity().getApplicationContext())
-                .getDatabase()
-                .aktivitasDao()
-                .getAktivitasByAccNumber(search);
+        // TODO
     }
 }
