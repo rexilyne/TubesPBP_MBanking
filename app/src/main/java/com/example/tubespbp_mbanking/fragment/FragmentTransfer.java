@@ -158,16 +158,6 @@ public class FragmentTransfer extends Fragment {
                 }
 
                 getUserByAccNumber(aktivitas.getAccountNumberDest());
-                if(userPenerimaList.isEmpty()) {
-                    Toast.makeText(getActivity(), "Rekening tujuan tidak ditemukan", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                userPenerima = userPenerimaList.get(0);
-                if(userPenerima.getAccountNumber().equals(userLogin.getAccountNumber())) {
-                    Toast.makeText(getActivity(), "Tidak bisa mengirim ke rekening sendiri", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
             }
         }
     };
