@@ -38,6 +38,9 @@ import com.example.tubespbp_mbanking.response.UserExtraResponse;
 import com.google.android.gms.common.api.Api;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -226,7 +229,7 @@ public class FragmentDetailAkun extends Fragment {
                 Toast.makeText(getActivity(), "Password tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else {
                 updateFirebaseEmail(userLogin.getEmail());
-                updateFirebasePassword(userLogin.getPassword());
+                updateFirebasePassword(userLogin.getPassword(), userLogin);
                 updateUser(userLogin);
 //                tempEmail = userLogin.getEmail();
             }
@@ -269,9 +272,18 @@ public class FragmentDetailAkun extends Fragment {
                 });
     }
 
-    private void updateFirebasePassword(String password) {
+    private void updateFirebasePassword(String password, User user) {
         binding.loadUpdate.setVisibility(View.VISIBLE);
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), user.getPassword());
+
+        firebaseUser.reauthenticate(credential)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d(TAG, "User re-authenticated.");
+                    }
+                });
 
         firebaseUser.updatePassword(password)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

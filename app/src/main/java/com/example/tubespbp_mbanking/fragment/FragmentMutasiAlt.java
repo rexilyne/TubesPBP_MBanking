@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,16 @@ import android.widget.Toast;
 
 import com.example.tubespbp_mbanking.R;
 import com.example.tubespbp_mbanking.adapter.MutasiAdapter;
+import com.example.tubespbp_mbanking.api.ApiClient;
+import com.example.tubespbp_mbanking.api.ApiInterface;
 import com.example.tubespbp_mbanking.databinding.FragmentMutasiAltBinding;
 import com.example.tubespbp_mbanking.databinding.FragmentMutasiBinding;
 import com.example.tubespbp_mbanking.model.Mutasi;
 import com.example.tubespbp_mbanking.model.User;
 import com.example.tubespbp_mbanking.preferences.UserPreferences;
+import com.example.tubespbp_mbanking.response.MutasiResponse;
+
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +38,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,7 +69,9 @@ public class FragmentMutasiAlt extends Fragment {
     private Mutasi checkMutasiDate;
     private DatePickerDialog datePickerDialog;
     private Date min, max;
+    private ApiInterface apiService;
 
+    public static final String TAG = FragmentMutasi.class.getSimpleName();
     public FragmentMutasiAlt() {
         // Required empty public constructor
     }
@@ -89,6 +101,7 @@ public class FragmentMutasiAlt extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        apiService = ApiClient.getClient().create(ApiInterface.class);
     }
 
     @Override
@@ -219,5 +232,32 @@ public class FragmentMutasiAlt extends Fragment {
 
     private void getMutasiByAccNumber(String search) {
         // TODO
+        binding.loading.setVisibility(View.VISIBLE);
+
+        Call<MutasiResponse> call = apiService.getMutasiByAccountNumber(search);
+
+        call.enqueue(new Callback<MutasiResponse>() {
+            @Override
+            public void onResponse(Call<MutasiResponse> call, Response<MutasiResponse> response) {
+                if(response.isSuccessful()) {
+                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Get Mutasi Berhasil");
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getActivity(), jObjError.getString("message"), Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                binding.loading.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<MutasiResponse> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                binding.loading.setVisibility(View.GONE);
+            }
+        });
     }
 }
