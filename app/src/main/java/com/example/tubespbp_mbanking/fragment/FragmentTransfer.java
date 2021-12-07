@@ -185,14 +185,11 @@ public class FragmentTransfer extends Fragment {
 
     private void addAktivitas(Aktivitas aktivitas) {
         // TODO
-        binding.loadUpdate.setVisibility(View.VISIBLE);
         Call<AktivitasResponse> call = apiService.createAktivitas(aktivitas);
         call.enqueue(new Callback<AktivitasResponse>() {
             @Override
             public void onResponse(Call<AktivitasResponse> call, Response<AktivitasResponse> response) {
                 if(response.isSuccessful()) {
-                    Toast.makeText(getActivity(),
-                            response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Add Aktivitas Berhasil");
                 } else {
                     try {
@@ -202,32 +199,26 @@ public class FragmentTransfer extends Fragment {
                                 jObjError.getString("message"),
                                 Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
-                        Toast.makeText(getActivity(),
-                                e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, e.getMessage());
                     }
                 }
-                binding.loadUpdate.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<AktivitasResponse> call, Throwable t) {
                 Toast.makeText(getActivity(),
                         t.getMessage(), Toast.LENGTH_SHORT).show();
-                binding.loadUpdate.setVisibility(View.GONE);
             }
         });
     }
 
     private void addMutasi(Mutasi mutasi) {
         // TODO
-        binding.loadUpdate.setVisibility(View.VISIBLE);
         Call<MutasiResponse> call = apiService.createMutasi(mutasi);
         call.enqueue(new Callback<MutasiResponse>() {
             @Override
             public void onResponse(Call<MutasiResponse> call, Response<MutasiResponse> response) {
                 if(response.isSuccessful()) {
-                    Toast.makeText(getActivity(),
-                            response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Add Mutasi Berhasil");
                 } else {
                     try {
@@ -237,18 +228,14 @@ public class FragmentTransfer extends Fragment {
                                 jObjError.getString("message"),
                                 Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
-                        Toast.makeText(getActivity(),
-                                e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, e.getMessage());
                     }
                 }
-                binding.loadUpdate.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<MutasiResponse> call, Throwable t) {
-                Toast.makeText(getActivity(),
-                        t.getMessage(), Toast.LENGTH_SHORT).show();
-                binding.loadUpdate.setVisibility(View.GONE);
+                Log.d(TAG, t.getMessage());
             }
         });
     }
@@ -280,8 +267,7 @@ public class FragmentTransfer extends Fragment {
                                 jObjError.getString("message"),
                                 Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
-                        Toast.makeText(getActivity(),
-                                e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, e.getMessage());
                     }
                 }
                 binding.loadUpdate.setVisibility(View.GONE);
@@ -318,8 +304,6 @@ public class FragmentTransfer extends Fragment {
             @Override
             public void onResponse(Call<UserExtraResponse> call, Response<UserExtraResponse> response) {
                 if(response.isSuccessful()) {
-                    Toast.makeText(getActivity(),
-                            response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     userPreferences.setLogin(userLogin);
                 } else {
                     try {
@@ -330,18 +314,15 @@ public class FragmentTransfer extends Fragment {
                                 Toast.LENGTH_SHORT).show();
 //                        Toast.makeText(getActivity(), "error1", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
-                        Toast.makeText(getActivity(),
-                                e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, e.getMessage());
                     }
                 }
-                binding.loadUpdate.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<UserExtraResponse> call, Throwable t) {
                 Toast.makeText(getActivity(),
                         t.getMessage(), Toast.LENGTH_SHORT).show();
-                binding.loadUpdate.setVisibility(View.GONE);
             }
         });
     }

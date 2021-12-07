@@ -150,33 +150,7 @@ public class FragmentMutasi extends Fragment {
     public View.OnClickListener btnCari = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            mutasiList = new ArrayList<>();
-            filteredList = new ArrayList<>();
-            Date dateObj = new Date();
             getMutasiByAccNumber(userLogin.getAccountNumber());
-            SimpleDateFormat df = new SimpleDateFormat("dd MMMM yyyy hh:mm", Locale.forLanguageTag("in-ID"));
-
-            for (int i = 0; i < mutasiList.size(); i++) {
-                checkMutasiDate = mutasiList.get(i);
-                try {
-                    dateObj = df.parse(checkMutasiDate.getTanggal());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                if(DateUtils.isToday(dateObj.getTime())) {
-                    filteredList.add(checkMutasiDate);
-                }
-            }
-
-            if(filteredList.isEmpty()) {
-                Toast.makeText(FragmentMutasi.this.getContext(), "Tidak ada mutasi", Toast.LENGTH_SHORT).show();
-            }
-
-            mutasiAdapter = new MutasiAdapter(filteredList);
-
-            recyclerView = binding.rvMutasi;
-            recyclerView.setLayoutManager(new LinearLayoutManager(FragmentMutasi.this.getContext()));
-            recyclerView.setAdapter(mutasiAdapter);
         }
     };
 
@@ -200,6 +174,33 @@ public class FragmentMutasi extends Fragment {
                 if(response.isSuccessful()) {
                     Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Get Mutasi Berhasil");
+
+                    mutasiList = response.body().getMutasiList();
+                    filteredList = new ArrayList<>();
+                    Date dateObj = new Date();
+                    SimpleDateFormat df = new SimpleDateFormat("dd MMMM yyyy hh:mm", Locale.forLanguageTag("in-ID"));
+
+                    for (int i = 0; i < mutasiList.size(); i++) {
+                        checkMutasiDate = mutasiList.get(i);
+                        try {
+                            dateObj = df.parse(checkMutasiDate.getTanggal());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if(DateUtils.isToday(dateObj.getTime())) {
+                            filteredList.add(checkMutasiDate);
+                        }
+                    }
+
+                    if(filteredList.isEmpty()) {
+                        Toast.makeText(FragmentMutasi.this.getContext(), "Tidak ada mutasi", Toast.LENGTH_SHORT).show();
+                    }
+
+                    mutasiAdapter = new MutasiAdapter(filteredList);
+
+                    recyclerView = binding.rvMutasi;
+                    recyclerView.setLayoutManager(new LinearLayoutManager(FragmentMutasi.this.getContext()));
+                    recyclerView.setAdapter(mutasiAdapter);
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());

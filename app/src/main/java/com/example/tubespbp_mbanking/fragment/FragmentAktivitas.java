@@ -109,17 +109,7 @@ public class FragmentAktivitas extends Fragment {
         userPreferences = new UserPreferences(getActivity());
         userLogin = userPreferences.getUserLogin();
 
-        aktivitasList = new ArrayList<>();
         getAktivitasByAccNumber(userLogin.getAccountNumber());
-        if(aktivitasList.isEmpty()) {
-            Toast.makeText(FragmentAktivitas.this.getContext(), "Aktivitas kosong", Toast.LENGTH_SHORT).show();
-        }
-
-        aktivitasAdapter = new AktivitasAdapter(aktivitasList, getActivity());
-
-        recyclerView = binding.rvAktivitas;
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        recyclerView.setAdapter(aktivitasAdapter);
     }
 
     @Override
@@ -136,9 +126,19 @@ public class FragmentAktivitas extends Fragment {
             @Override
             public void onResponse(Call<AktivitasResponse> call, Response<AktivitasResponse> response) {
                 if(response.isSuccessful()) {
+                    aktivitasList = response.body().getAktivitasList();
                     Toast.makeText(getActivity(),
                             response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Get Aktivitas Berhasil");
+                    if(aktivitasList.isEmpty()) {
+                        Toast.makeText(FragmentAktivitas.this.getContext(), "Aktivitas kosong", Toast.LENGTH_SHORT).show();
+                    }
+
+                    aktivitasAdapter = new AktivitasAdapter(aktivitasList, getActivity());
+
+                    recyclerView = binding.rvAktivitas;
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    recyclerView.setAdapter(aktivitasAdapter);
                 } else {
                     try {
                         JSONObject jObjError = new

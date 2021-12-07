@@ -24,7 +24,7 @@ public interface ApiInterface {
 
     @Headers({"Accept: application/json"})
     @GET("userextra/{uid}")
-    Call<UserExtraResponse> getUserExtraByUid(@Path("id") String uid);
+    Call<UserExtraResponse> getUserExtraByUid(@Path("uid") String uid);
 
     @Headers({"Accept: application/json"})
     @POST("userextra")
