@@ -149,6 +149,7 @@ public class FragmentDetailAkun extends Fragment {
         if(!userLogin.getImgUrl().isEmpty()) {
             Glide.with(getActivity().getApplicationContext())
                     .load(userLogin.getImgUrl())
+                    .placeholder(R.drawable.nouser)
                     .dontAnimate()
                     .into(binding.profileImage);
         }
@@ -241,7 +242,6 @@ public class FragmentDetailAkun extends Fragment {
     }
 
     private void updateFirebaseEmail(String email) {
-        binding.loadUpdate.setVisibility(View.VISIBLE);
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();;
 
         firebaseUser.updateEmail(email)
@@ -267,13 +267,11 @@ public class FragmentDetailAkun extends Fragment {
                                 Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
-                        binding.loadUpdate.setVisibility(View.GONE);
                     }
                 });
     }
 
     private void updateFirebasePassword(String password, User user) {
-        binding.loadUpdate.setVisibility(View.VISIBLE);
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), user.getPassword());
 
@@ -306,7 +304,6 @@ public class FragmentDetailAkun extends Fragment {
                                 Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
-                        binding.loadUpdate.setVisibility(View.GONE);
                     }
                 });
     }
@@ -339,6 +336,7 @@ public class FragmentDetailAkun extends Fragment {
                         userLogin.setImgUrl(response.body().getUserExtraList().get(0).getImgUrl());
                         Glide.with(getActivity().getApplicationContext())
                                 .load(userLogin.getImgUrl())
+                                .placeholder(R.drawable.nouser)
                                 .dontAnimate()
                                 .into(binding.profileImage);
                     }
